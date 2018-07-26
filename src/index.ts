@@ -42,7 +42,7 @@ const resolvers = {
       )
     },
     async findOrCreateShows(parent, { shows }, ctx: Context, info) {
-      //  returnns an array of {id: } objects containing a show Id
+      //  returns an array of {id: } objects containing a show Id
       const showIdResponse = await findOrCreateShows(ctx.db, shows);
       const showIds = map(showIdResponse, "id");
       return ctx.db.query.shows({ where: { id_in: showIds } }, info);

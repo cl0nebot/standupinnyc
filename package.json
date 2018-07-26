@@ -2,13 +2,18 @@
   "name": "noahslist-api",
   "scripts": {
     "start": "ts-node src/index.ts",
+    "db": "docker-compose --file=database/docker-compose.yml up -d",
     "dev": "npm-run-all --parallel start playground",
     "playground": "graphql playground"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
     "graphql-import": "0.6.0",
     "graphql-yoga": "1.14.12",
     "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
     "prisma-binding": "2.1.1"
   },
   "devDependencies": {

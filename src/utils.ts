@@ -5,6 +5,18 @@ export interface Context {
   request: any
 }
 
+
+export function getInSequence(array, asyncFunc) {
+  return array.reduce(
+    (previous, current) =>
+      previous.then(accumulator =>
+        asyncFunc(current).then(result => accumulator.concat(result))
+      ),
+    Promise.resolve([])
+  );
+}
+
+
 export function slugify(text) {
   return text
     .toString()

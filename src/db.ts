@@ -10,7 +10,7 @@ const prisma = new Prisma({
 const getVenuesForScraper = async ({scraper}) => {
   return prisma.query.venues(
     {where: {scraper}},
-    "{ id name stubsiteId ticketmasterId}")
+    "{ id name stubsiteId ticketmasterId slug}")
 }
 
 export {getVenuesForScraper}

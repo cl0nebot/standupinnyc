@@ -9,7 +9,7 @@ import {
   compact,
 } from "lodash";
 import prisma from "./db";
-
+import {ScrapedShow} from "./scrapers/interfaces"
 import { slugify, getInSequence } from "./utils";
 // Queries
 const fetchComediansBySlugs = (slugs: string[]) => {
@@ -162,7 +162,7 @@ function getComedianIds(comedians, allComedians) {
   return ids;
 }
 
-export default function findOrCreateShows(shows, venueId) {
+export default function findOrCreateShows(shows: ScrapedShow[], venueId: string) {
   return bulkFormatShowsAndFindOrCreateComedians(shows, venueId).then(shows => upsertShows(shows));
 };
 

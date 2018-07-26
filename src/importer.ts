@@ -3,7 +3,8 @@ import {Venue, ScraperType} from "./generated/prisma"
 import findOrCreateShows from "./findOrCreateShows"
 import SCRAPER_MAPPING from "./scrapers"
 import {writeJson} from "fs-extra"
-const getShows = async (venue: Venue) => {
+import {ScrapedShow} from "./scrapers/interfaces"
+const getShows = async (venue: Venue): Promise<ScrapedShow[]>  => {
   const scraper = SCRAPER_MAPPING[venue.scraper]
   const id = venue[scraper.idField]
   return scraper.getShowsForVenue(id)

@@ -3,6 +3,7 @@ import * as moment from "moment";
 
 import fetchLineups from "./fetchLineups";
 import fetchReservations from "./fetchReservations";
+import {Scraper} from "../interfaces"
 
 
 
@@ -66,7 +67,7 @@ export async function getShowsForVenue(slug) {
 
 }
 
-const comedycellar = {
+const comedycellar: Scraper = {
   getShowsForVenue,
   idField: "slug"
 }

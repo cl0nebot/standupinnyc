@@ -3,7 +3,7 @@ import * as qs from "querystring";
 import { getPrice } from "./getPrice";
 import { find } from "lodash";
 import { getInSequence } from "../../utils";
-
+import {ScrapedShow} from "../interfaces"
 
 const baseUrl = "https://app.ticketmaster.com/discovery/v2/";
 
@@ -53,7 +53,7 @@ function formatAttractions(attractions = []) {
   return attractions.map(formatAttractionAsComedian);
 }
 
-function formatEventAsShow(event) {
+function formatEventAsShow(event): ScrapedShow {
   const {
     name,
     id,
@@ -88,6 +88,7 @@ async function addPriceAndSoldOutFromCheckoutPage(show) {
 function addCheckoutInfo(shows) {
   return getInSequence(shows, addPriceAndSoldOutFromCheckoutPage);
 }
+
 
 export function getEvents(ticketmasterId) {
   return fetchEvents({ ticketmasterId }).then(formatEvents);

@@ -1,6 +1,9 @@
 import Axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
 import * as moment from "moment-timezone";
 import * as qs from "querystring";
+import {ScrapedShow, ScrapedComedian} from "../interfaces"
+
+
 const apiConfig: AxiosRequestConfig = {
   baseURL: "https://api.stubsites.com/api/v1/laughstub/",
 };
@@ -41,7 +44,22 @@ const getEvents = (query: StubSitesQuery = {}) => {
   return getAll(`events?${qs.stringify(query)}`, "events");
 };
 
-export function formatEvent(eventData): any {
+function formatPerformer(performer: any): ScrapedComedian {
+  const { id: stubsiteId, name } = performer;
+
+  const comedian: ScrapedComedian = {
+    stubsiteId,
+    name
+  };
+
+  if (performer.images.length > 0) {
+    comedian.imageUrl = performer.images[0].url;
+  }
+
+  return comedian;
+}
+
+export function formatEvent(eventData): ScrapedShow {
   const {
     id: stubsiteId,
     name,
@@ -67,27 +85,11 @@ export function formatEvent(eventData): any {
   };
 }
 
-function formatPerformer(performer: any): any {
-  const { id: stubsiteId, name } = performer;
-
-  const comedian = {
-    stubsiteId,
-    name,
-    imageUrl: null,
-  };
-
-  if (performer.images.length > 0) {
-    comedian.imageUrl = performer.images[0].url;
-  }
-
-  return comedian;
-}
-
 function datetimeStringToISO(datetimeString: string) {
   return moment.tz(datetimeString, "America/New_York").toDate();
 }
 
-export async function getShowsForVenue(stubsiteId) {
+export async function getShowsForVenue(stubsiteId): Promise<ScrapedShow[]> {
   const showList = await getEvents({ venueId: stubsiteId });
 
   const eventIds = showList.map((item: any) => item.id);

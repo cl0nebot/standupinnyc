@@ -10,7 +10,7 @@ import {
 } from "lodash";
 
 import { slugify } from "./utils";
-
+import {prisma} from "./db"
 // Queries
 const fetchComediansBySlugs = (prisma, slugs: string[]) => {
   return prisma.query.comedians(

@@ -48,34 +48,10 @@ const getEvents = (query: StubSitesQuery = {}) => {
   return getAll(`events?${qs.stringify(query)}`, "events");
 };
 
-async function getStandupNy(): Promise<any> {
-  return getShowsForVenue({ stubsiteId: 71 });
-}
-
 export {
-  getAll,
-  getVenues,
-  getComedians,
-  getShowList,
-  getStandupNy,
-  formatEvent,
-  getShowsForVenue,
+  formatEvent
 };
 
-async function getShowsForVenue({ stubsiteId }) {
-  const showList = await getEvents({ venueId: stubsiteId });
-
-  const eventIds = showList.map((item: any) => item.id);
-  const shows = [];
-  for (const id of eventIds) {
-    const event = await getJson(`events/${id}`);
-    const show = formatEvent(event);
-    if (show.comedians.length > 0) {
-      shows.push(show);
-    }
-  }
-  return shows;
-}
 
 function formatEvent(eventData): any {
   const {
@@ -118,6 +94,22 @@ function formatPerformer(performer: any): any {
 
   return comedian;
 }
+
 function datetimeStringToISO(datetimeString: string) {
   return moment.tz(datetimeString, "America/New_York").toDate();
+}
+
+export async function getShowsForVenue(stubsiteId) {
+  const showList = await getEvents({ venueId: stubsiteId });
+
+  const eventIds = showList.map((item: any) => item.id);
+  const shows = [];
+  for (const id of eventIds) {
+    const event = await getJson(`events/${id}`);
+    const show = formatEvent(event);
+    if (show.comedians.length > 0) {
+      shows.push(show);
+    }
+  }
+  return shows;
 }

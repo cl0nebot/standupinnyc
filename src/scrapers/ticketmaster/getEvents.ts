@@ -89,7 +89,7 @@ function addCheckoutInfo(shows) {
   return getInSequence(shows, addPriceAndSoldOutFromCheckoutPage);
 }
 
-export function getEvents({ ticketmasterId }) {
+export function getEvents(ticketmasterId) {
   return fetchEvents({ ticketmasterId }).then(formatEvents);
   // .then(addCheckoutInfo);
 }

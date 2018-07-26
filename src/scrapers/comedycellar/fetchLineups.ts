@@ -4,7 +4,7 @@ import * as cheerio from "cheerio";
 // fetch html lineup info and parse out the comedian info
 // endpoints accepts a date in seconds since epoch
 // http://www.comedycellar.com/line-up/?_date=1515369600
-export default function fetchLineup(dateString: string) {
+export default function fetchLineups(dateString: string) {
   const [year, month, day] = dateString.split("-");
   const dateInEpochSeconds =
     Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day)) / 1000;
@@ -17,6 +17,11 @@ export default function fetchLineup(dateString: string) {
     },
     url: url,
   }).then(response => parseLineupHtml(response.data));
+}
+// get all lineups for a given day
+export async function fetchLineupsForVenue(venueSlug: string, dateString: string) {
+  const lineups = await fetchLineups(dateString)
+  return lineups.filter((lineup) => lineup.venueSlug === venueSlug)
 }
 
 const lineupSelectors = {

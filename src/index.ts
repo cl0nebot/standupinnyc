@@ -9,38 +9,16 @@ import { map } from "lodash";
 
 const resolvers = {
   Query: {
-    feed(parent, args, context: Context, info) {
-      return context.db.query.posts({ where: { isPublished: true } }, info)
-    },
-    drafts(parent, args, context: Context, info) {
-      return context.db.query.posts({ where: { isPublished: false } }, info)
-    },
-    post(parent, { id }, context: Context, info) {
-      return context.db.query.post({ where: { id: id } }, info)
-    },
     venues(parent, args, context: Context, info) {
       return context.db.query.venues(args, info)
+    },
+    comedians(parent, args, context: Context, info) {
+      return context.db.query.comedians(args, info)
     }
+
   },
   Mutation: {
-    createDraft(parent, { title, text }, context: Context, info) {
-      return context.db.mutation.createPost(
-        { data: { title, text } },
-        info,
-      )
-    },
-    deletePost(parent, { id }, context: Context, info) {
-      return context.db.mutation.deletePost({ where: { id } }, info)
-    },
-    publish(parent, { id }, context: Context, info) {
-      return context.db.mutation.updatePost(
-        {
-          where: { id },
-          data: { isPublished: true },
-        },
-        info,
-      )
-    },
+
     async updateShowsForVenue(parent, { where }, ctx: Context, info) {
       //  returnns an array of {id: } objects containing a show Id
       const venue = await ctx.db.query.venue({where})

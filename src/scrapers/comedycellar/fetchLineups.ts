@@ -7,20 +7,24 @@ import * as cheerio from "cheerio";
 export default function fetchLineups(dateString: string) {
   const [year, month, day] = dateString.split("-");
   const dateInEpochSeconds =
-    Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day)) / 1000;
+    Date.UTC(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10)) /
+    1000;
   const url = `http://www.comedycellar.com/line-up`;
   return axios({
+    url,
     method: "get",
     params: {
-      _date: dateInEpochSeconds,
-    },
-    url: url,
+      _date: dateInEpochSeconds
+    }
   }).then(response => parseLineupHtml(response.data));
 }
 // get all lineups for a given day
-export async function fetchLineupsForVenue(venueSlug: string, dateString: string) {
-  const lineups = await fetchLineups(dateString)
-  return lineups.filter((lineup) => lineup.venueSlug === venueSlug)
+export async function fetchLineupsForVenue(
+  venueSlug: string,
+  dateString: string
+) {
+  const lineups = await fetchLineups(dateString);
+  return lineups.filter(lineup => lineup.venueSlug === venueSlug);
 }
 
 const lineupSelectors = {
@@ -30,9 +34,9 @@ const lineupSelectors = {
     container: ".comedian-block",
     name: ".comedian-block-desc-name",
     website: ".comedian-website-link",
-    imageUrl: ".comedian-block-image > img",
+    imageUrl: ".comedian-block-image > img"
   },
-  reservationLink: ".make-comedy-reservation-link",
+  reservationLink: ".make-comedy-reservation-link"
 };
 
 const parseLineupHtml = html => {
@@ -62,7 +66,7 @@ const parseShowHtml = ($, showHtml) => {
     .find(lineupSelectors.reservationLink)
     .attr("href");
   const venueSlug = getVenueSlug(venueRaw);
-  const showId = parseInt(checkoutUrl.split("?showid=")[1]);
+  const showId = parseInt(checkoutUrl.split("?showid=")[1], 10);
   const comedians = [];
 
   $(showHtml)
@@ -86,15 +90,15 @@ const parseShowHtml = ($, showHtml) => {
       comedians.push({
         name,
         website,
-        imageUrl,
+        imageUrl
       });
     });
 
   return {
-    cellarId: showId,
-    checkoutUrl: checkoutUrl,
-    venueSlug: venueSlug,
-    comedians: comedians,
+    checkoutUrl,
+    venueSlug,
+    comedians,
+    cellarId: showId
   };
 };
 

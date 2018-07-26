@@ -1,10 +1,7 @@
 import { GraphQLServer } from "graphql-yoga";
-import { importSchema } from "graphql-import";
 import { Prisma } from "./generated/prisma";
 import { Context } from "./utils";
-import { forwardTo } from "prisma-binding";
 import { importShows } from "./importer";
-import { map } from "lodash";
 
 const resolvers = {
   Query: {
@@ -26,8 +23,8 @@ const resolvers = {
 };
 
 const server = new GraphQLServer({
-  typeDefs: "./src/schema.graphql",
   resolvers,
+  typeDefs: "./src/schema.graphql",
   context: req => ({
     ...req,
     db: new Prisma({

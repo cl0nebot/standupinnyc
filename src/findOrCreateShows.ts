@@ -1,13 +1,4 @@
-import {
-  chain,
-  map,
-  flatten,
-  uniqBy,
-  value,
-  find,
-  filter,
-  compact
-} from "lodash";
+import { chain, map, flatten, find, filter } from "lodash";
 import db from "./db";
 import { ScrapedShow } from "./scrapers/interfaces";
 import { slugify, getInSequence } from "./utils";
@@ -65,14 +56,13 @@ const upsertShow = async show => {
       },
       "{id}"
     );
-  } else {
-    return db.mutation.createShow(
-      {
-        data: show
-      },
-      `{id}`
-    );
   }
+  return db.mutation.createShow(
+    {
+      data: show
+    },
+    `{id}`
+  );
 };
 const upsertShows = shows =>
   getInSequence(shows, show => upsertShow(show).then(show => show.id));

@@ -1,5 +1,4 @@
-import {VenueWhereUniqueInput} from "../generated/prisma";
-
+import { VenueWhereUniqueInput } from "../generated/prisma";
 
 export interface ScrapedComedian {
   name: string;

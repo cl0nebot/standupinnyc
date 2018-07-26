@@ -1,11 +1,10 @@
 import Axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
 import * as moment from "moment-timezone";
 import * as qs from "querystring";
-import {ScrapedShow, ScrapedComedian} from "../interfaces"
-
+import { ScrapedShow, ScrapedComedian } from "../interfaces";
 
 const apiConfig: AxiosRequestConfig = {
-  baseURL: "https://api.stubsites.com/api/v1/laughstub/",
+  baseURL: "https://api.stubsites.com/api/v1/laughstub/"
 };
 
 const api: AxiosInstance = Axios.create(apiConfig);
@@ -20,16 +19,10 @@ const getAll = (pageUrl: string, responseKey: string, results = []) => {
     const mergedResults = results.concat(data[responseKey]);
     if (nextPageUrl) {
       return getAll(nextPageUrl, responseKey, mergedResults);
-    } else {
-      return mergedResults;
     }
+    return mergedResults;
   });
 };
-const getVenues = () => getAll("venues?state=NY&city=New%20York", "venues");
-const getComedians = () =>
-  getAll("performers?categoryId=1", "performers").then(performers =>
-    performers.map(formatPerformer)
-  );
 
 interface StubSitesQuery {
   itemsPerPage?: number;
@@ -68,9 +61,9 @@ export function formatEvent(eventData): ScrapedShow {
       {
         datetime: startTimeString,
         checkout_url: checkoutUrl,
-        ticket_types: [{ price }],
-      },
-    ],
+        ticket_types: [{ price }]
+      }
+    ]
   } = eventData;
 
   const startTime = datetimeStringToISO(startTimeString);
@@ -81,7 +74,7 @@ export function formatEvent(eventData): ScrapedShow {
     startTime,
     name,
     checkoutUrl,
-    comedians,
+    comedians
   };
 }
 

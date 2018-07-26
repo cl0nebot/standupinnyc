@@ -11,13 +11,13 @@ const parsePriceFromCheckoutPage = html => {
   if (priceString.includes("$")) {
     const price = parseFloat(priceString.replace("$", ""));
     return {
-      soldOut: false,
       price,
+      soldOut: false
     };
   }
   return {
     soldOut: true,
-    price: undefined,
+    price: undefined
   };
 };
 

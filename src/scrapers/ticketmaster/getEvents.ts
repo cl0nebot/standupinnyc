@@ -1,17 +1,14 @@
 import Axios from "axios";
-import * as qs from "querystring";
-import { getPrice } from "./getPrice";
 import { find } from "lodash";
-import { getInSequence } from "../../utils";
-import {ScrapedShow} from "../interfaces"
+import { ScrapedShow } from "../interfaces";
 
 const baseUrl = "https://app.ticketmaster.com/discovery/v2/";
 
 const axios = Axios.create({
   baseURL: baseUrl,
   params: {
-    apikey: process.env.TICKETMASTER_API_KEY,
-  },
+    apikey: process.env.TICKETMASTER_API_KEY
+  }
 });
 
 function fetchEvents({ ticketmasterId }) {
@@ -19,28 +16,26 @@ function fetchEvents({ ticketmasterId }) {
     .get("events", {
       params: {
         venueId: ticketmasterId,
-        size: 100,
-      },
-    })
-    .then(response => {
-      console.log(response.data)
-      return response
-    })
-    .then(response => {
-      if(response.data.page.totalElements > 0) {
-        return response.data._embedded.events
-      }
-      else {
-        return []
+        size: 100
       }
     })
+    .then(response => {
+      console.log(response.data);
+      return response;
+    })
+    .then(response => {
+      if (response.data.page.totalElements > 0) {
+        return response.data._embedded.events;
+      }
+      return [];
+    });
 }
 
 function formatAttractionAsComedian({ id, name, images }) {
   const comedian = {
-    ticketmasterId: id,
     name,
-    imageUrl: undefined,
+    ticketmasterId: id,
+    imageUrl: undefined
   };
   const image = find(images, { fallback: false });
   if (image) {
@@ -58,17 +53,19 @@ function formatEventAsShow(event): ScrapedShow {
     name,
     id,
     url,
-    dates: { start: { dateTime } },
-    _embedded: { attractions },
+    dates: {
+      start: { dateTime }
+    },
+    _embedded: { attractions }
   } = event;
   const comedians = formatAttractions(attractions);
 
   return {
     name,
+    comedians,
     ticketmasterId: id,
     checkoutUrl: url,
-    startTime: dateTime,
-    comedians,
+    startTime: dateTime
   };
 }
 
@@ -76,19 +73,18 @@ function formatEvents(events) {
   return events.map(formatEventAsShow);
 }
 
-async function addPriceAndSoldOutFromCheckoutPage(show) {
-  const { checkoutUrl } = show;
-  const priceData = await getPrice(checkoutUrl);
-  return {
-    ...show,
-    ...priceData,
-  };
-}
+// async function addPriceAndSoldOutFromCheckoutPage(show) {
+//   const { checkoutUrl } = show;
+//   const priceData = await getPrice(checkoutUrl);
+//   return {
+//     ...show,
+//     ...priceData,
+//   };
+// }
 
-function addCheckoutInfo(shows) {
-  return getInSequence(shows, addPriceAndSoldOutFromCheckoutPage);
-}
-
+// function addCheckoutInfo(shows) {
+//   return getInSequence(shows, addPriceAndSoldOutFromCheckoutPage);
+// }
 
 export function getEvents(ticketmasterId) {
   return fetchEvents({ ticketmasterId }).then(formatEvents);

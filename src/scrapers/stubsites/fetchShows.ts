@@ -34,13 +34,6 @@ interface StubSitesQuery {
   venueId?: number;
 }
 
-const getShowList = (query: StubSitesQuery = {}) => {
-  query.itemsPerPage = query.itemsPerPage || 100;
-  query.orderBy = query.orderBy || "date";
-
-  return getAll(`showtimes?${qs.stringify(query)}`, "showtimes");
-};
-
 const getEvents = (query: StubSitesQuery = {}) => {
   query.itemsPerPage = query.itemsPerPage || 100;
   query.orderBy = query.orderBy || "date";
@@ -48,12 +41,7 @@ const getEvents = (query: StubSitesQuery = {}) => {
   return getAll(`events?${qs.stringify(query)}`, "events");
 };
 
-export {
-  formatEvent
-};
-
-
-function formatEvent(eventData): any {
+export function formatEvent(eventData): any {
   const {
     id: stubsiteId,
     name,

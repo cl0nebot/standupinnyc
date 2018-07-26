@@ -10,7 +10,7 @@ import {
 } from "lodash";
 import prisma from "./db";
 
-import { slugify } from "./utils";
+import { slugify, getInSequence } from "./utils";
 // Queries
 const fetchComediansBySlugs = (slugs: string[]) => {
   return prisma.query.comedians(
@@ -131,12 +131,6 @@ const bulkFormatShowsAndFindOrCreateComedians = async (shows, venueId) => {
   return showsForInsert;
 };
 
-const findOrCreateShows = (shows, venueId) => {
-  return bulkFormatShowsAndFindOrCreateComedians(shows, venueId).then(shows => upsertShows(shows));
-};
-
-export { findOrCreateShows };
-
 function formatShowForInsert(showData, allComedians, venueId) {
   const { comedians, ...showInfo } = showData;
   const comedianConnectIds = getComedianIds(comedians, allComedians);
@@ -168,12 +162,7 @@ function getComedianIds(comedians, allComedians) {
   return ids;
 }
 
-function getInSequence(array, asyncFunc) {
-  return array.reduce(
-    (previous, current) =>
-      previous.then(accumulator =>
-        asyncFunc(current).then(result => accumulator.concat(result))
-      ),
-    Promise.resolve([])
-  );
-}
+export default function findOrCreateShows(shows, venueId) {
+  return bulkFormatShowsAndFindOrCreateComedians(shows, venueId).then(shows => upsertShows(shows));
+};
+

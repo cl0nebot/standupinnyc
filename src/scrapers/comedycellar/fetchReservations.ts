@@ -16,7 +16,6 @@ export default function fetchReservations(dateString: string) {
     "mode":"cors"
   }).then(resp => resp.json())
     .then((response: any) => {
-    console.log(response)
     if (!response.success) {
       throw new Error("looking up reservation data failed");
     }

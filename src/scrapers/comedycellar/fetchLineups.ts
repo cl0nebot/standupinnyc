@@ -9,7 +9,6 @@ export default function fetchLineups(dateString: string) {
   const dateInEpochSeconds =
     Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day)) / 1000;
   const url = `http://www.comedycellar.com/line-up`;
-  console.log(dateInEpochSeconds);
   return axios({
     method: "get",
     params: {

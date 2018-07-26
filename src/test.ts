@@ -1,27 +1,30 @@
-import { scrapeSource } from "./scraper";
 import db from "./db";
-import {Venue} from "./generated/prisma"
-
+import {Venue, ScraperType} from "./generated/prisma"
+import {findOrCreateShows} from "./formatComedians"
 import SCRAPER_MAPPING from "./scrapers"
+import {writeJson} from "fs-extra"
 const getShows = async (venue: Venue) => {
   const scraper = SCRAPER_MAPPING[venue.scraper]
-  return scraper.getShowsForVenue(venue)
+  const id = venue[scraper.idField]
+  return scraper.getShowsForVenue(id)
 }
 
-async function scrape() {
-  const venue = await db.query.venue({where: {slug: "standupny"}}, "{ id scraper name stubsiteId ticketmasterId slug}")
-  console.log(venue.name)
-  const shows = await getShows(venue)
-  console.log(shows)
+async function importShows(venue: Venue)  {
+  const showData = await getShows(venue)
+  const shows = await findOrCreateShows(showData, venue.id)
+  console.log(`${shows.length} updated for ${venue.name}`)
   return shows
 }
 
-scrape()
-// getShowsForVenue("comedycellar")
-//   .then(shows => console.log("comedycellar", shows.length)).catch(err => console.error(err))
 
-// getShowsForVenue("villageunderground")
-//   .then(shows => console.log("villageunderground", shows.length)).catch(err => console.error(err))
+async function scrapeSources(sources: ScraperType[]) {
+  const venues = await db.query.venues({where: {scraper_in: sources}})
+  const results = await Promise.all(venues.map(importShows))
+  return results
+}
+
+
+scrapeSources(["COMEDYCELLAR", "STUBSITES"])
 
 function log(data) {
   console.log(data);

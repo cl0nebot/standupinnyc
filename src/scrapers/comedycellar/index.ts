@@ -53,15 +53,17 @@ async function getUpcomingShows(maxDays = 7) {
 }
 
 function removeVenueSlug(show) {
-  delete show.venueSlug
-  return show
+  const {venueSlug, ...showWithoutVenueSlug} = show
+  return showWithoutVenueSlug
 }
 
 export async function getShowsForVenue(slug) {
   const allShows = await getUpcomingShows()
-  return allShows
-          .filter((lineup) => lineup.venueSlug === slug)
-          .map(removeVenueSlug)
+  console.log("Shows found:", allShows)
+  const venueShows = allShows.filter((lineup) => lineup.venueSlug === slug).map(removeVenueSlug)
+  console.log(slug, venueShows.length)
+  return venueShows
+
 }
 
 const comedycellar = {

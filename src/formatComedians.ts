@@ -8,11 +8,11 @@ import {
   filter,
   compact,
 } from "lodash";
+import prisma from "./db";
 
 import { slugify } from "./utils";
-import {prisma} from "./db"
 // Queries
-const fetchComediansBySlugs = (prisma, slugs: string[]) => {
+const fetchComediansBySlugs = (slugs: string[]) => {
   return prisma.query.comedians(
     {
       where: {
@@ -23,7 +23,7 @@ const fetchComediansBySlugs = (prisma, slugs: string[]) => {
   );
 };
 
-const createComedian = (prisma, comedian) => {
+const createComedian = (comedian) => {
   return prisma.mutation.createComedian(
     {
       data: comedian,
@@ -32,7 +32,7 @@ const createComedian = (prisma, comedian) => {
   );
 };
 
-const upsertShow = async (prisma, show) => {
+const upsertShow = async (show) => {
   const {
     stubsiteId,
     cellarId,
@@ -77,13 +77,13 @@ const upsertShow = async (prisma, show) => {
   }
 };
 
-const createComedians = (prisma, comedians) => Promise.all(comedians.map(comedian =>createComedian(prisma, comedian)));
-const upsertShows = (prisma, shows) => getInSequence(shows, (show) =>
-  upsertShow(prisma, show));
+const createComedians = (comedians) => Promise.all(comedians.map(comedian =>createComedian(comedian)));
+const upsertShows = (shows) => getInSequence(shows, (show) =>
+  upsertShow(show));
 
-const findExistingComedians = (prisma, comedians) => {
+const findExistingComedians = (comedians) => {
   const slugs = map(comedians, "slug");
-  return fetchComediansBySlugs(prisma, slugs).then(comedianSlugIdTuples => {
+  return fetchComediansBySlugs(slugs).then(comedianSlugIdTuples => {
     return map(comedians, comedian => {
       const dbRecord = find(comedianSlugIdTuples, { slug: comedian.slug });
       if (dbRecord) {
@@ -94,7 +94,7 @@ const findExistingComedians = (prisma, comedians) => {
   });
 };
 
-const findOrCreateComedians = async (prisma, shows) => {
+const findOrCreateComedians = async (shows) => {
   console.log(JSON.stringify(shows));
   const uniqComedians = chain(shows)
     .map("comedians")
@@ -102,11 +102,11 @@ const findOrCreateComedians = async (prisma, shows) => {
     .uniqBy("slug")
     .value();
   // Get the ids of all existing comedians
-  const comediansWithIds = await findExistingComedians(prisma, uniqComedians);
+  const comediansWithIds = await findExistingComedians(uniqComedians);
 
   const existingComedians = filter(comediansWithIds, "id");
   const newComedians = filter(comediansWithIds, comedian => !comedian.id);
-  const createdComedians = await createComedians(prisma, newComedians);
+  const createdComedians = await createComedians(newComedians);
   return flatten(existingComedians, createdComedians);
 };
 
@@ -121,23 +121,24 @@ const slugifyComedian = comedian => {
   return comedian;
 };
 
-const bulkFormatShowsAndFindOrCreateComedians = async (prisma, shows) => {
+const bulkFormatShowsAndFindOrCreateComedians = async (shows, venueId) => {
   const showsWithSlugs = addSlugToShowsComedians(shows);
-  const allComedians = await findOrCreateComedians(prisma, shows);
+  const allComedians = await findOrCreateComedians(shows);
   const showsForInsert = showsWithSlugs.map(show =>
-    formatShowForInsert(show, allComedians)
+    formatShowForInsert(show, allComedians, venueId)
   );
+  console.log(showsForInsert)
   return showsForInsert;
 };
 
-const findOrCreateShows = (prisma, shows) => {
-  return bulkFormatShowsAndFindOrCreateComedians(prisma, shows).then(shows => upsertShows(prisma, shows));
+const findOrCreateShows = (shows, venueId) => {
+  return bulkFormatShowsAndFindOrCreateComedians(shows, venueId).then(shows => upsertShows(shows));
 };
 
 export { findOrCreateShows };
 
-function formatShowForInsert(showData, allComedians) {
-  const { venueId, venueSlug, comedians, ...showInfo } = showData;
+function formatShowForInsert(showData, allComedians, venueId) {
+  const { comedians, ...showInfo } = showData;
   const comedianConnectIds = getComedianIds(comedians, allComedians);
   return {
     venue: {
@@ -165,11 +166,6 @@ function getComedianIds(comedians, allComedians) {
     .compact()
     .value();
   return ids;
-}
-
-function log(data) {
-  console.log(data);
-  return data;
 }
 
 function getInSequence(array, asyncFunc) {

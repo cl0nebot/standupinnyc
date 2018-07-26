@@ -1,0 +1,2243 @@
+# source: http://localhost:4466
+# timestamp: Mon Jul 23 2018 22:34:45 GMT-0400 (EDT)
+
+type AggregateComedian {
+  count: Int!
+}
+
+type AggregatePost {
+  count: Int!
+}
+
+type AggregateShow {
+  count: Int!
+}
+
+type AggregateVenue {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Comedian implements Node {
+  id: ID!
+  slug: String!
+  name: String!
+  website: String
+  imageUrl: String
+  stubsiteId: Int
+  ticketmasterId: String
+  shows(where: ShowWhereInput, orderBy: ShowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Show!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type ComedianConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ComedianEdge]!
+  aggregate: AggregateComedian!
+}
+
+input ComedianCreateInput {
+  slug: String!
+  name: String!
+  website: String
+  imageUrl: String
+  stubsiteId: Int
+  ticketmasterId: String
+  shows: ShowCreateManyWithoutComediansInput
+}
+
+input ComedianCreateManyWithoutShowsInput {
+  create: [ComedianCreateWithoutShowsInput!]
+  connect: [ComedianWhereUniqueInput!]
+}
+
+input ComedianCreateWithoutShowsInput {
+  slug: String!
+  name: String!
+  website: String
+  imageUrl: String
+  stubsiteId: Int
+  ticketmasterId: String
+}
+
+"""An edge in a connection."""
+type ComedianEdge {
+  """The item at the end of the edge."""
+  node: Comedian!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ComedianOrderByInput {
+  id_ASC
+  id_DESC
+  slug_ASC
+  slug_DESC
+  name_ASC
+  name_DESC
+  website_ASC
+  website_DESC
+  imageUrl_ASC
+  imageUrl_DESC
+  stubsiteId_ASC
+  stubsiteId_DESC
+  ticketmasterId_ASC
+  ticketmasterId_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ComedianPreviousValues {
+  id: ID!
+  slug: String!
+  name: String!
+  website: String
+  imageUrl: String
+  stubsiteId: Int
+  ticketmasterId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ComedianSubscriptionPayload {
+  mutation: MutationType!
+  node: Comedian
+  updatedFields: [String!]
+  previousValues: ComedianPreviousValues
+}
+
+input ComedianSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ComedianSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ComedianSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ComedianSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ComedianWhereInput
+}
+
+input ComedianUpdateInput {
+  slug: String
+  name: String
+  website: String
+  imageUrl: String
+  stubsiteId: Int
+  ticketmasterId: String
+  shows: ShowUpdateManyWithoutComediansInput
+}
+
+input ComedianUpdateManyWithoutShowsInput {
+  create: [ComedianCreateWithoutShowsInput!]
+  connect: [ComedianWhereUniqueInput!]
+  disconnect: [ComedianWhereUniqueInput!]
+  delete: [ComedianWhereUniqueInput!]
+  update: [ComedianUpdateWithWhereUniqueWithoutShowsInput!]
+  upsert: [ComedianUpsertWithWhereUniqueWithoutShowsInput!]
+}
+
+input ComedianUpdateWithoutShowsDataInput {
+  slug: String
+  name: String
+  website: String
+  imageUrl: String
+  stubsiteId: Int
+  ticketmasterId: String
+}
+
+input ComedianUpdateWithWhereUniqueWithoutShowsInput {
+  where: ComedianWhereUniqueInput!
+  data: ComedianUpdateWithoutShowsDataInput!
+}
+
+input ComedianUpsertWithWhereUniqueWithoutShowsInput {
+  where: ComedianWhereUniqueInput!
+  update: ComedianUpdateWithoutShowsDataInput!
+  create: ComedianCreateWithoutShowsInput!
+}
+
+input ComedianWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ComedianWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ComedianWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ComedianWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  slug: String
+
+  """All values that are not equal to given value."""
+  slug_not: String
+
+  """All values that are contained in given list."""
+  slug_in: [String!]
+
+  """All values that are not contained in given list."""
+  slug_not_in: [String!]
+
+  """All values less than the given value."""
+  slug_lt: String
+
+  """All values less than or equal the given value."""
+  slug_lte: String
+
+  """All values greater than the given value."""
+  slug_gt: String
+
+  """All values greater than or equal the given value."""
+  slug_gte: String
+
+  """All values containing the given string."""
+  slug_contains: String
+
+  """All values not containing the given string."""
+  slug_not_contains: String
+
+  """All values starting with the given string."""
+  slug_starts_with: String
+
+  """All values not starting with the given string."""
+  slug_not_starts_with: String
+
+  """All values ending with the given string."""
+  slug_ends_with: String
+
+  """All values not ending with the given string."""
+  slug_not_ends_with: String
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  website: String
+
+  """All values that are not equal to given value."""
+  website_not: String
+
+  """All values that are contained in given list."""
+  website_in: [String!]
+
+  """All values that are not contained in given list."""
+  website_not_in: [String!]
+
+  """All values less than the given value."""
+  website_lt: String
+
+  """All values less than or equal the given value."""
+  website_lte: String
+
+  """All values greater than the given value."""
+  website_gt: String
+
+  """All values greater than or equal the given value."""
+  website_gte: String
+
+  """All values containing the given string."""
+  website_contains: String
+
+  """All values not containing the given string."""
+  website_not_contains: String
+
+  """All values starting with the given string."""
+  website_starts_with: String
+
+  """All values not starting with the given string."""
+  website_not_starts_with: String
+
+  """All values ending with the given string."""
+  website_ends_with: String
+
+  """All values not ending with the given string."""
+  website_not_ends_with: String
+  imageUrl: String
+
+  """All values that are not equal to given value."""
+  imageUrl_not: String
+
+  """All values that are contained in given list."""
+  imageUrl_in: [String!]
+
+  """All values that are not contained in given list."""
+  imageUrl_not_in: [String!]
+
+  """All values less than the given value."""
+  imageUrl_lt: String
+
+  """All values less than or equal the given value."""
+  imageUrl_lte: String
+
+  """All values greater than the given value."""
+  imageUrl_gt: String
+
+  """All values greater than or equal the given value."""
+  imageUrl_gte: String
+
+  """All values containing the given string."""
+  imageUrl_contains: String
+
+  """All values not containing the given string."""
+  imageUrl_not_contains: String
+
+  """All values starting with the given string."""
+  imageUrl_starts_with: String
+
+  """All values not starting with the given string."""
+  imageUrl_not_starts_with: String
+
+  """All values ending with the given string."""
+  imageUrl_ends_with: String
+
+  """All values not ending with the given string."""
+  imageUrl_not_ends_with: String
+  stubsiteId: Int
+
+  """All values that are not equal to given value."""
+  stubsiteId_not: Int
+
+  """All values that are contained in given list."""
+  stubsiteId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stubsiteId_not_in: [Int!]
+
+  """All values less than the given value."""
+  stubsiteId_lt: Int
+
+  """All values less than or equal the given value."""
+  stubsiteId_lte: Int
+
+  """All values greater than the given value."""
+  stubsiteId_gt: Int
+
+  """All values greater than or equal the given value."""
+  stubsiteId_gte: Int
+  ticketmasterId: String
+
+  """All values that are not equal to given value."""
+  ticketmasterId_not: String
+
+  """All values that are contained in given list."""
+  ticketmasterId_in: [String!]
+
+  """All values that are not contained in given list."""
+  ticketmasterId_not_in: [String!]
+
+  """All values less than the given value."""
+  ticketmasterId_lt: String
+
+  """All values less than or equal the given value."""
+  ticketmasterId_lte: String
+
+  """All values greater than the given value."""
+  ticketmasterId_gt: String
+
+  """All values greater than or equal the given value."""
+  ticketmasterId_gte: String
+
+  """All values containing the given string."""
+  ticketmasterId_contains: String
+
+  """All values not containing the given string."""
+  ticketmasterId_not_contains: String
+
+  """All values starting with the given string."""
+  ticketmasterId_starts_with: String
+
+  """All values not starting with the given string."""
+  ticketmasterId_not_starts_with: String
+
+  """All values ending with the given string."""
+  ticketmasterId_ends_with: String
+
+  """All values not ending with the given string."""
+  ticketmasterId_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  shows_every: ShowWhereInput
+  shows_some: ShowWhereInput
+  shows_none: ShowWhereInput
+}
+
+input ComedianWhereUniqueInput {
+  id: ID
+  slug: String
+  stubsiteId: Int
+  ticketmasterId: String
+}
+
+scalar DateTime
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createPost(data: PostCreateInput!): Post!
+  createComedian(data: ComedianCreateInput!): Comedian!
+  createShow(data: ShowCreateInput!): Show!
+  createVenue(data: VenueCreateInput!): Venue!
+  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateComedian(data: ComedianUpdateInput!, where: ComedianWhereUniqueInput!): Comedian
+  updateShow(data: ShowUpdateInput!, where: ShowWhereUniqueInput!): Show
+  updateVenue(data: VenueUpdateInput!, where: VenueWhereUniqueInput!): Venue
+  deletePost(where: PostWhereUniqueInput!): Post
+  deleteComedian(where: ComedianWhereUniqueInput!): Comedian
+  deleteShow(where: ShowWhereUniqueInput!): Show
+  deleteVenue(where: VenueWhereUniqueInput!): Venue
+  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  upsertComedian(where: ComedianWhereUniqueInput!, create: ComedianCreateInput!, update: ComedianUpdateInput!): Comedian!
+  upsertShow(where: ShowWhereUniqueInput!, create: ShowCreateInput!, update: ShowUpdateInput!): Show!
+  upsertVenue(where: VenueWhereUniqueInput!, create: VenueCreateInput!, update: VenueUpdateInput!): Venue!
+  updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
+  updateManyComedians(data: ComedianUpdateInput!, where: ComedianWhereInput): BatchPayload!
+  updateManyShows(data: ShowUpdateInput!, where: ShowWhereInput): BatchPayload!
+  updateManyVenues(data: VenueUpdateInput!, where: VenueWhereInput): BatchPayload!
+  deleteManyPosts(where: PostWhereInput): BatchPayload!
+  deleteManyComedians(where: ComedianWhereInput): BatchPayload!
+  deleteManyShows(where: ShowWhereInput): BatchPayload!
+  deleteManyVenues(where: VenueWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Post implements Node {
+  id: ID!
+  isPublished: Boolean!
+  title: String!
+  text: String!
+}
+
+"""A connection to a list of items."""
+type PostConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PostEdge]!
+  aggregate: AggregatePost!
+}
+
+input PostCreateInput {
+  isPublished: Boolean
+  title: String!
+  text: String!
+}
+
+"""An edge in a connection."""
+type PostEdge {
+  """The item at the end of the edge."""
+  node: Post!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PostOrderByInput {
+  id_ASC
+  id_DESC
+  isPublished_ASC
+  isPublished_DESC
+  title_ASC
+  title_DESC
+  text_ASC
+  text_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type PostPreviousValues {
+  id: ID!
+  isPublished: Boolean!
+  title: String!
+  text: String!
+}
+
+type PostSubscriptionPayload {
+  mutation: MutationType!
+  node: Post
+  updatedFields: [String!]
+  previousValues: PostPreviousValues
+}
+
+input PostSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PostSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PostSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PostSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PostWhereInput
+}
+
+input PostUpdateInput {
+  isPublished: Boolean
+  title: String
+  text: String
+}
+
+input PostWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PostWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PostWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PostWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  isPublished: Boolean
+
+  """All values that are not equal to given value."""
+  isPublished_not: Boolean
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+}
+
+input PostWhereUniqueInput {
+  id: ID
+}
+
+type Query {
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  comedians(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comedian]!
+  shows(where: ShowWhereInput, orderBy: ShowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Show]!
+  venues(where: VenueWhereInput, orderBy: VenueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Venue]!
+  post(where: PostWhereUniqueInput!): Post
+  comedian(where: ComedianWhereUniqueInput!): Comedian
+  show(where: ShowWhereUniqueInput!): Show
+  venue(where: VenueWhereUniqueInput!): Venue
+  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  comediansConnection(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ComedianConnection!
+  showsConnection(where: ShowWhereInput, orderBy: ShowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ShowConnection!
+  venuesConnection(where: VenueWhereInput, orderBy: VenueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VenueConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+enum ScraperType {
+  COMEDYCELLAR
+  STUBSITES
+  TICKETMASTER
+}
+
+type Show implements Node {
+  id: ID!
+  name: String!
+  comedians(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comedian!]
+  description: String
+  startTime: DateTime!
+  checkoutUrl: String!
+  venue(where: VenueWhereInput): Venue!
+  price: Float
+  soldOut: Boolean
+  stubsiteId: Int
+  cellarId: Int
+  ticketmasterId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type ShowConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ShowEdge]!
+  aggregate: AggregateShow!
+}
+
+input ShowCreateInput {
+  name: String!
+  description: String
+  startTime: DateTime!
+  checkoutUrl: String!
+  price: Float
+  soldOut: Boolean
+  stubsiteId: Int
+  cellarId: Int
+  ticketmasterId: String
+  comedians: ComedianCreateManyWithoutShowsInput
+  venue: VenueCreateOneWithoutShowsInput!
+}
+
+input ShowCreateManyWithoutComediansInput {
+  create: [ShowCreateWithoutComediansInput!]
+  connect: [ShowWhereUniqueInput!]
+}
+
+input ShowCreateManyWithoutVenueInput {
+  create: [ShowCreateWithoutVenueInput!]
+  connect: [ShowWhereUniqueInput!]
+}
+
+input ShowCreateWithoutComediansInput {
+  name: String!
+  description: String
+  startTime: DateTime!
+  checkoutUrl: String!
+  price: Float
+  soldOut: Boolean
+  stubsiteId: Int
+  cellarId: Int
+  ticketmasterId: String
+  venue: VenueCreateOneWithoutShowsInput!
+}
+
+input ShowCreateWithoutVenueInput {
+  name: String!
+  description: String
+  startTime: DateTime!
+  checkoutUrl: String!
+  price: Float
+  soldOut: Boolean
+  stubsiteId: Int
+  cellarId: Int
+  ticketmasterId: String
+  comedians: ComedianCreateManyWithoutShowsInput
+}
+
+"""An edge in a connection."""
+type ShowEdge {
+  """The item at the end of the edge."""
+  node: Show!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ShowOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  startTime_ASC
+  startTime_DESC
+  checkoutUrl_ASC
+  checkoutUrl_DESC
+  price_ASC
+  price_DESC
+  soldOut_ASC
+  soldOut_DESC
+  stubsiteId_ASC
+  stubsiteId_DESC
+  cellarId_ASC
+  cellarId_DESC
+  ticketmasterId_ASC
+  ticketmasterId_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ShowPreviousValues {
+  id: ID!
+  name: String!
+  description: String
+  startTime: DateTime!
+  checkoutUrl: String!
+  price: Float
+  soldOut: Boolean
+  stubsiteId: Int
+  cellarId: Int
+  ticketmasterId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ShowSubscriptionPayload {
+  mutation: MutationType!
+  node: Show
+  updatedFields: [String!]
+  previousValues: ShowPreviousValues
+}
+
+input ShowSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ShowSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ShowSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ShowSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ShowWhereInput
+}
+
+input ShowUpdateInput {
+  name: String
+  description: String
+  startTime: DateTime
+  checkoutUrl: String
+  price: Float
+  soldOut: Boolean
+  stubsiteId: Int
+  cellarId: Int
+  ticketmasterId: String
+  comedians: ComedianUpdateManyWithoutShowsInput
+  venue: VenueUpdateOneWithoutShowsInput
+}
+
+input ShowUpdateManyWithoutComediansInput {
+  create: [ShowCreateWithoutComediansInput!]
+  connect: [ShowWhereUniqueInput!]
+  disconnect: [ShowWhereUniqueInput!]
+  delete: [ShowWhereUniqueInput!]
+  update: [ShowUpdateWithWhereUniqueWithoutComediansInput!]
+  upsert: [ShowUpsertWithWhereUniqueWithoutComediansInput!]
+}
+
+input ShowUpdateManyWithoutVenueInput {
+  create: [ShowCreateWithoutVenueInput!]
+  connect: [ShowWhereUniqueInput!]
+  disconnect: [ShowWhereUniqueInput!]
+  delete: [ShowWhereUniqueInput!]
+  update: [ShowUpdateWithWhereUniqueWithoutVenueInput!]
+  upsert: [ShowUpsertWithWhereUniqueWithoutVenueInput!]
+}
+
+input ShowUpdateWithoutComediansDataInput {
+  name: String
+  description: String
+  startTime: DateTime
+  checkoutUrl: String
+  price: Float
+  soldOut: Boolean
+  stubsiteId: Int
+  cellarId: Int
+  ticketmasterId: String
+  venue: VenueUpdateOneWithoutShowsInput
+}
+
+input ShowUpdateWithoutVenueDataInput {
+  name: String
+  description: String
+  startTime: DateTime
+  checkoutUrl: String
+  price: Float
+  soldOut: Boolean
+  stubsiteId: Int
+  cellarId: Int
+  ticketmasterId: String
+  comedians: ComedianUpdateManyWithoutShowsInput
+}
+
+input ShowUpdateWithWhereUniqueWithoutComediansInput {
+  where: ShowWhereUniqueInput!
+  data: ShowUpdateWithoutComediansDataInput!
+}
+
+input ShowUpdateWithWhereUniqueWithoutVenueInput {
+  where: ShowWhereUniqueInput!
+  data: ShowUpdateWithoutVenueDataInput!
+}
+
+input ShowUpsertWithWhereUniqueWithoutComediansInput {
+  where: ShowWhereUniqueInput!
+  update: ShowUpdateWithoutComediansDataInput!
+  create: ShowCreateWithoutComediansInput!
+}
+
+input ShowUpsertWithWhereUniqueWithoutVenueInput {
+  where: ShowWhereUniqueInput!
+  update: ShowUpdateWithoutVenueDataInput!
+  create: ShowCreateWithoutVenueInput!
+}
+
+input ShowWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ShowWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ShowWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ShowWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  startTime: DateTime
+
+  """All values that are not equal to given value."""
+  startTime_not: DateTime
+
+  """All values that are contained in given list."""
+  startTime_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  startTime_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  startTime_lt: DateTime
+
+  """All values less than or equal the given value."""
+  startTime_lte: DateTime
+
+  """All values greater than the given value."""
+  startTime_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  startTime_gte: DateTime
+  checkoutUrl: String
+
+  """All values that are not equal to given value."""
+  checkoutUrl_not: String
+
+  """All values that are contained in given list."""
+  checkoutUrl_in: [String!]
+
+  """All values that are not contained in given list."""
+  checkoutUrl_not_in: [String!]
+
+  """All values less than the given value."""
+  checkoutUrl_lt: String
+
+  """All values less than or equal the given value."""
+  checkoutUrl_lte: String
+
+  """All values greater than the given value."""
+  checkoutUrl_gt: String
+
+  """All values greater than or equal the given value."""
+  checkoutUrl_gte: String
+
+  """All values containing the given string."""
+  checkoutUrl_contains: String
+
+  """All values not containing the given string."""
+  checkoutUrl_not_contains: String
+
+  """All values starting with the given string."""
+  checkoutUrl_starts_with: String
+
+  """All values not starting with the given string."""
+  checkoutUrl_not_starts_with: String
+
+  """All values ending with the given string."""
+  checkoutUrl_ends_with: String
+
+  """All values not ending with the given string."""
+  checkoutUrl_not_ends_with: String
+  price: Float
+
+  """All values that are not equal to given value."""
+  price_not: Float
+
+  """All values that are contained in given list."""
+  price_in: [Float!]
+
+  """All values that are not contained in given list."""
+  price_not_in: [Float!]
+
+  """All values less than the given value."""
+  price_lt: Float
+
+  """All values less than or equal the given value."""
+  price_lte: Float
+
+  """All values greater than the given value."""
+  price_gt: Float
+
+  """All values greater than or equal the given value."""
+  price_gte: Float
+  soldOut: Boolean
+
+  """All values that are not equal to given value."""
+  soldOut_not: Boolean
+  stubsiteId: Int
+
+  """All values that are not equal to given value."""
+  stubsiteId_not: Int
+
+  """All values that are contained in given list."""
+  stubsiteId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stubsiteId_not_in: [Int!]
+
+  """All values less than the given value."""
+  stubsiteId_lt: Int
+
+  """All values less than or equal the given value."""
+  stubsiteId_lte: Int
+
+  """All values greater than the given value."""
+  stubsiteId_gt: Int
+
+  """All values greater than or equal the given value."""
+  stubsiteId_gte: Int
+  cellarId: Int
+
+  """All values that are not equal to given value."""
+  cellarId_not: Int
+
+  """All values that are contained in given list."""
+  cellarId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  cellarId_not_in: [Int!]
+
+  """All values less than the given value."""
+  cellarId_lt: Int
+
+  """All values less than or equal the given value."""
+  cellarId_lte: Int
+
+  """All values greater than the given value."""
+  cellarId_gt: Int
+
+  """All values greater than or equal the given value."""
+  cellarId_gte: Int
+  ticketmasterId: String
+
+  """All values that are not equal to given value."""
+  ticketmasterId_not: String
+
+  """All values that are contained in given list."""
+  ticketmasterId_in: [String!]
+
+  """All values that are not contained in given list."""
+  ticketmasterId_not_in: [String!]
+
+  """All values less than the given value."""
+  ticketmasterId_lt: String
+
+  """All values less than or equal the given value."""
+  ticketmasterId_lte: String
+
+  """All values greater than the given value."""
+  ticketmasterId_gt: String
+
+  """All values greater than or equal the given value."""
+  ticketmasterId_gte: String
+
+  """All values containing the given string."""
+  ticketmasterId_contains: String
+
+  """All values not containing the given string."""
+  ticketmasterId_not_contains: String
+
+  """All values starting with the given string."""
+  ticketmasterId_starts_with: String
+
+  """All values not starting with the given string."""
+  ticketmasterId_not_starts_with: String
+
+  """All values ending with the given string."""
+  ticketmasterId_ends_with: String
+
+  """All values not ending with the given string."""
+  ticketmasterId_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  comedians_every: ComedianWhereInput
+  comedians_some: ComedianWhereInput
+  comedians_none: ComedianWhereInput
+  venue: VenueWhereInput
+}
+
+input ShowWhereUniqueInput {
+  id: ID
+  stubsiteId: Int
+  cellarId: Int
+  ticketmasterId: String
+}
+
+type Subscription {
+  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  comedian(where: ComedianSubscriptionWhereInput): ComedianSubscriptionPayload
+  show(where: ShowSubscriptionWhereInput): ShowSubscriptionPayload
+  venue(where: VenueSubscriptionWhereInput): VenueSubscriptionPayload
+}
+
+type Venue implements Node {
+  id: ID!
+  name: String!
+  slug: String!
+  description: String
+  url: String!
+  stubsiteId: Int
+  ticketmasterId: String
+  shows(where: ShowWhereInput, orderBy: ShowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Show!]
+  lineOne: String!
+  lineTwo: String
+  zip: Int!
+  city: String!
+  state: String!
+  latitude: Float!
+  longitude: Float!
+  scraper: ScraperType!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type VenueConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [VenueEdge]!
+  aggregate: AggregateVenue!
+}
+
+input VenueCreateInput {
+  name: String!
+  slug: String!
+  description: String
+  url: String!
+  stubsiteId: Int
+  ticketmasterId: String
+  lineOne: String!
+  lineTwo: String
+  zip: Int!
+  city: String!
+  state: String!
+  latitude: Float!
+  longitude: Float!
+  scraper: ScraperType!
+  shows: ShowCreateManyWithoutVenueInput
+}
+
+input VenueCreateOneWithoutShowsInput {
+  create: VenueCreateWithoutShowsInput
+  connect: VenueWhereUniqueInput
+}
+
+input VenueCreateWithoutShowsInput {
+  name: String!
+  slug: String!
+  description: String
+  url: String!
+  stubsiteId: Int
+  ticketmasterId: String
+  lineOne: String!
+  lineTwo: String
+  zip: Int!
+  city: String!
+  state: String!
+  latitude: Float!
+  longitude: Float!
+  scraper: ScraperType!
+}
+
+"""An edge in a connection."""
+type VenueEdge {
+  """The item at the end of the edge."""
+  node: Venue!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum VenueOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  slug_ASC
+  slug_DESC
+  description_ASC
+  description_DESC
+  url_ASC
+  url_DESC
+  stubsiteId_ASC
+  stubsiteId_DESC
+  ticketmasterId_ASC
+  ticketmasterId_DESC
+  lineOne_ASC
+  lineOne_DESC
+  lineTwo_ASC
+  lineTwo_DESC
+  zip_ASC
+  zip_DESC
+  city_ASC
+  city_DESC
+  state_ASC
+  state_DESC
+  latitude_ASC
+  latitude_DESC
+  longitude_ASC
+  longitude_DESC
+  scraper_ASC
+  scraper_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type VenuePreviousValues {
+  id: ID!
+  name: String!
+  slug: String!
+  description: String
+  url: String!
+  stubsiteId: Int
+  ticketmasterId: String
+  lineOne: String!
+  lineTwo: String
+  zip: Int!
+  city: String!
+  state: String!
+  latitude: Float!
+  longitude: Float!
+  scraper: ScraperType!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type VenueSubscriptionPayload {
+  mutation: MutationType!
+  node: Venue
+  updatedFields: [String!]
+  previousValues: VenuePreviousValues
+}
+
+input VenueSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [VenueSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [VenueSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [VenueSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: VenueWhereInput
+}
+
+input VenueUpdateInput {
+  name: String
+  slug: String
+  description: String
+  url: String
+  stubsiteId: Int
+  ticketmasterId: String
+  lineOne: String
+  lineTwo: String
+  zip: Int
+  city: String
+  state: String
+  latitude: Float
+  longitude: Float
+  scraper: ScraperType
+  shows: ShowUpdateManyWithoutVenueInput
+}
+
+input VenueUpdateOneWithoutShowsInput {
+  create: VenueCreateWithoutShowsInput
+  connect: VenueWhereUniqueInput
+  delete: Boolean
+  update: VenueUpdateWithoutShowsDataInput
+  upsert: VenueUpsertWithoutShowsInput
+}
+
+input VenueUpdateWithoutShowsDataInput {
+  name: String
+  slug: String
+  description: String
+  url: String
+  stubsiteId: Int
+  ticketmasterId: String
+  lineOne: String
+  lineTwo: String
+  zip: Int
+  city: String
+  state: String
+  latitude: Float
+  longitude: Float
+  scraper: ScraperType
+}
+
+input VenueUpsertWithoutShowsInput {
+  update: VenueUpdateWithoutShowsDataInput!
+  create: VenueCreateWithoutShowsInput!
+}
+
+input VenueWhereInput {
+  """Logical AND on all given filters."""
+  AND: [VenueWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [VenueWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [VenueWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  slug: String
+
+  """All values that are not equal to given value."""
+  slug_not: String
+
+  """All values that are contained in given list."""
+  slug_in: [String!]
+
+  """All values that are not contained in given list."""
+  slug_not_in: [String!]
+
+  """All values less than the given value."""
+  slug_lt: String
+
+  """All values less than or equal the given value."""
+  slug_lte: String
+
+  """All values greater than the given value."""
+  slug_gt: String
+
+  """All values greater than or equal the given value."""
+  slug_gte: String
+
+  """All values containing the given string."""
+  slug_contains: String
+
+  """All values not containing the given string."""
+  slug_not_contains: String
+
+  """All values starting with the given string."""
+  slug_starts_with: String
+
+  """All values not starting with the given string."""
+  slug_not_starts_with: String
+
+  """All values ending with the given string."""
+  slug_ends_with: String
+
+  """All values not ending with the given string."""
+  slug_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  stubsiteId: Int
+
+  """All values that are not equal to given value."""
+  stubsiteId_not: Int
+
+  """All values that are contained in given list."""
+  stubsiteId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stubsiteId_not_in: [Int!]
+
+  """All values less than the given value."""
+  stubsiteId_lt: Int
+
+  """All values less than or equal the given value."""
+  stubsiteId_lte: Int
+
+  """All values greater than the given value."""
+  stubsiteId_gt: Int
+
+  """All values greater than or equal the given value."""
+  stubsiteId_gte: Int
+  ticketmasterId: String
+
+  """All values that are not equal to given value."""
+  ticketmasterId_not: String
+
+  """All values that are contained in given list."""
+  ticketmasterId_in: [String!]
+
+  """All values that are not contained in given list."""
+  ticketmasterId_not_in: [String!]
+
+  """All values less than the given value."""
+  ticketmasterId_lt: String
+
+  """All values less than or equal the given value."""
+  ticketmasterId_lte: String
+
+  """All values greater than the given value."""
+  ticketmasterId_gt: String
+
+  """All values greater than or equal the given value."""
+  ticketmasterId_gte: String
+
+  """All values containing the given string."""
+  ticketmasterId_contains: String
+
+  """All values not containing the given string."""
+  ticketmasterId_not_contains: String
+
+  """All values starting with the given string."""
+  ticketmasterId_starts_with: String
+
+  """All values not starting with the given string."""
+  ticketmasterId_not_starts_with: String
+
+  """All values ending with the given string."""
+  ticketmasterId_ends_with: String
+
+  """All values not ending with the given string."""
+  ticketmasterId_not_ends_with: String
+  lineOne: String
+
+  """All values that are not equal to given value."""
+  lineOne_not: String
+
+  """All values that are contained in given list."""
+  lineOne_in: [String!]
+
+  """All values that are not contained in given list."""
+  lineOne_not_in: [String!]
+
+  """All values less than the given value."""
+  lineOne_lt: String
+
+  """All values less than or equal the given value."""
+  lineOne_lte: String
+
+  """All values greater than the given value."""
+  lineOne_gt: String
+
+  """All values greater than or equal the given value."""
+  lineOne_gte: String
+
+  """All values containing the given string."""
+  lineOne_contains: String
+
+  """All values not containing the given string."""
+  lineOne_not_contains: String
+
+  """All values starting with the given string."""
+  lineOne_starts_with: String
+
+  """All values not starting with the given string."""
+  lineOne_not_starts_with: String
+
+  """All values ending with the given string."""
+  lineOne_ends_with: String
+
+  """All values not ending with the given string."""
+  lineOne_not_ends_with: String
+  lineTwo: String
+
+  """All values that are not equal to given value."""
+  lineTwo_not: String
+
+  """All values that are contained in given list."""
+  lineTwo_in: [String!]
+
+  """All values that are not contained in given list."""
+  lineTwo_not_in: [String!]
+
+  """All values less than the given value."""
+  lineTwo_lt: String
+
+  """All values less than or equal the given value."""
+  lineTwo_lte: String
+
+  """All values greater than the given value."""
+  lineTwo_gt: String
+
+  """All values greater than or equal the given value."""
+  lineTwo_gte: String
+
+  """All values containing the given string."""
+  lineTwo_contains: String
+
+  """All values not containing the given string."""
+  lineTwo_not_contains: String
+
+  """All values starting with the given string."""
+  lineTwo_starts_with: String
+
+  """All values not starting with the given string."""
+  lineTwo_not_starts_with: String
+
+  """All values ending with the given string."""
+  lineTwo_ends_with: String
+
+  """All values not ending with the given string."""
+  lineTwo_not_ends_with: String
+  zip: Int
+
+  """All values that are not equal to given value."""
+  zip_not: Int
+
+  """All values that are contained in given list."""
+  zip_in: [Int!]
+
+  """All values that are not contained in given list."""
+  zip_not_in: [Int!]
+
+  """All values less than the given value."""
+  zip_lt: Int
+
+  """All values less than or equal the given value."""
+  zip_lte: Int
+
+  """All values greater than the given value."""
+  zip_gt: Int
+
+  """All values greater than or equal the given value."""
+  zip_gte: Int
+  city: String
+
+  """All values that are not equal to given value."""
+  city_not: String
+
+  """All values that are contained in given list."""
+  city_in: [String!]
+
+  """All values that are not contained in given list."""
+  city_not_in: [String!]
+
+  """All values less than the given value."""
+  city_lt: String
+
+  """All values less than or equal the given value."""
+  city_lte: String
+
+  """All values greater than the given value."""
+  city_gt: String
+
+  """All values greater than or equal the given value."""
+  city_gte: String
+
+  """All values containing the given string."""
+  city_contains: String
+
+  """All values not containing the given string."""
+  city_not_contains: String
+
+  """All values starting with the given string."""
+  city_starts_with: String
+
+  """All values not starting with the given string."""
+  city_not_starts_with: String
+
+  """All values ending with the given string."""
+  city_ends_with: String
+
+  """All values not ending with the given string."""
+  city_not_ends_with: String
+  state: String
+
+  """All values that are not equal to given value."""
+  state_not: String
+
+  """All values that are contained in given list."""
+  state_in: [String!]
+
+  """All values that are not contained in given list."""
+  state_not_in: [String!]
+
+  """All values less than the given value."""
+  state_lt: String
+
+  """All values less than or equal the given value."""
+  state_lte: String
+
+  """All values greater than the given value."""
+  state_gt: String
+
+  """All values greater than or equal the given value."""
+  state_gte: String
+
+  """All values containing the given string."""
+  state_contains: String
+
+  """All values not containing the given string."""
+  state_not_contains: String
+
+  """All values starting with the given string."""
+  state_starts_with: String
+
+  """All values not starting with the given string."""
+  state_not_starts_with: String
+
+  """All values ending with the given string."""
+  state_ends_with: String
+
+  """All values not ending with the given string."""
+  state_not_ends_with: String
+  latitude: Float
+
+  """All values that are not equal to given value."""
+  latitude_not: Float
+
+  """All values that are contained in given list."""
+  latitude_in: [Float!]
+
+  """All values that are not contained in given list."""
+  latitude_not_in: [Float!]
+
+  """All values less than the given value."""
+  latitude_lt: Float
+
+  """All values less than or equal the given value."""
+  latitude_lte: Float
+
+  """All values greater than the given value."""
+  latitude_gt: Float
+
+  """All values greater than or equal the given value."""
+  latitude_gte: Float
+  longitude: Float
+
+  """All values that are not equal to given value."""
+  longitude_not: Float
+
+  """All values that are contained in given list."""
+  longitude_in: [Float!]
+
+  """All values that are not contained in given list."""
+  longitude_not_in: [Float!]
+
+  """All values less than the given value."""
+  longitude_lt: Float
+
+  """All values less than or equal the given value."""
+  longitude_lte: Float
+
+  """All values greater than the given value."""
+  longitude_gt: Float
+
+  """All values greater than or equal the given value."""
+  longitude_gte: Float
+  scraper: ScraperType
+
+  """All values that are not equal to given value."""
+  scraper_not: ScraperType
+
+  """All values that are contained in given list."""
+  scraper_in: [ScraperType!]
+
+  """All values that are not contained in given list."""
+  scraper_not_in: [ScraperType!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  shows_every: ShowWhereInput
+  shows_some: ShowWhereInput
+  shows_none: ShowWhereInput
+}
+
+input VenueWhereUniqueInput {
+  id: ID
+  slug: String
+  stubsiteId: Int
+  ticketmasterId: String
+}

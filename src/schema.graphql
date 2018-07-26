@@ -1,0 +1,39 @@
+# import * from "./generated/prisma.graphql"
+input RawComedianInput {
+  name: String!
+  website: String
+  imageUrl: String
+  stubsiteId: Int
+  ticketmasterId: String
+}
+
+input ShowInput {
+  name: String!
+  description: String
+  startTime: DateTime!
+  checkoutUrl: String!
+  price: Float
+  soldOut: Boolean
+  stubsiteId: Int
+  cellarId: Int
+  ticketmasterId: String
+  comedians: [RawComedianInput]
+  venueId: ID!
+}
+
+type Query {
+  feed: [Post!]!
+  drafts: [Post!]!
+  post(id: ID!): Post
+  venues(where: VenueWhereInput, orderBy: VenueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Venue]!
+  comedians(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comedian]!
+
+}
+
+type Mutation {
+  createDraft(title: String!, text: String): Post
+  deletePost(id: ID!): Post
+  publish(id: ID!): Post
+  findOrCreateShows(shows: [ShowInput!]!): [Show]!
+
+}

@@ -1,0 +1,129 @@
+mutation {
+  first: createPost(data: {
+    title: "Hello World 👋"
+    text: "I like turtles."
+    isPublished: true
+  }) {
+    id
+  }
+
+  second: createPost(data: {
+    title: "Join us at GraphQL Europe 🇪🇺 "
+    text: "Get a 10%-discount with this promo code on graphql-europe.org: gql-boilerplates"
+    isPublished: true
+  }) {
+    id
+  }
+
+  third: createPost(data: {
+    title: "Solving world hunger"
+    text: "This is a draft..."
+    isPublished: false
+  }) {
+    id
+  }
+  standupny: createVenue(
+    data: {
+      name: "Standup NY"
+      slug: "standupny"
+      lineOne: "236 W 78th st"
+      zip: 10024
+      city: "New York"
+      state: "New York"
+      url: "https://standupny.com"
+      latitude: 40.782786
+      longitude: -73.980187
+      stubsiteId: 71
+      scraper: STUBSITES
+    }
+  ) {
+    id
+  }
+
+  comedycellar: createVenue(
+    data: {
+      name: "Comedy Cellar"
+      slug: "comedycellar"
+      lineOne: "117 MacDougal Street"
+      lineTwo: "Between W 3rd St. & Minetta Lane"
+      zip: 10012
+      city: "New York"
+      state: "New York"
+      url: "http://www.comedycellar.com"
+      latitude: 40.73019740000001
+      longitude: -74.00056970000003
+      scraper: COMEDYCELLAR
+    }
+  ) {
+    id
+  }
+
+  villageunderground: createVenue(
+    data: {
+      name: "Village Underground - Comedy Cellar"
+      slug: "villageunderground"
+      lineOne: "130 W. 3rd Street"
+      lineTwo: "6th and MacDougal"
+      zip: 10012
+      city: "New York"
+      state: "New York"
+      url: "http://www.comedycellar.com"
+      latitude: 40.7306227
+      longitude: -74.00092740000002
+      scraper: COMEDYCELLAR
+    }
+  ) {
+    id
+  }
+  gotham: createVenue(
+    data: {
+      slug: "gotham"
+      name: "Gotham Comedy Club"
+      lineOne: "208 W 23rd St"
+      zip: 10021
+      city: "New York"
+      state: "New York"
+      latitude: 40.7441081
+      longitude: -73.99641780000002
+      url: "http://www.gothamcomedyclub.com/"
+      stubsiteId: 61
+      scraper: STUBSITES
+    }
+  ) {
+    id
+  }
+  eastville: createVenue(
+    data: {
+      slug: "eastville"
+      name: "EastVille Comedy Club"
+      lineOne: "85 E 4th Street"
+      zip: 10003
+      city: "New York"
+      state: "New York"
+      latitude: 40.7264324
+      longitude: -73.9899
+      url: "http://eastvillecomedy.com/"
+      ticketmasterId: "KovZpZAFnAJA"
+      scraper: TICKETMASTER
+    }
+  ) {
+    id
+  }
+  carolines: createVenue(
+    data: {
+      slug: "carolines"
+      name: "Caroline's on Broadway"
+      lineOne: "1626 Broadway"
+      zip: 10036
+      city: "New York"
+      state: "New York"
+      latitude: 40.7612124
+      longitude: -73.984163
+      url: "http://www.carolines.com/"
+      ticketmasterId: "KovZpZAdI77A"
+      scraper: TICKETMASTER
+    }
+  ) {
+    id
+  }
+}

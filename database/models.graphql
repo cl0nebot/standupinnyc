@@ -1,0 +1,56 @@
+type Comedian @model {
+  id: ID! @unique
+  slug: String! @unique
+  name: String!
+  website: String
+  imageUrl: String
+  stubsiteId: Int @unique
+  ticketmasterId: String @unique
+  shows: [Show!]!
+  createdAt: DateTime! # optional system field
+  updatedAt: DateTime! # optional system field
+}
+
+enum ScraperType {
+  COMEDYCELLAR
+  STUBSITES
+  TICKETMASTER
+}
+
+type Show @model {
+  id: ID! @unique
+  name: String!
+  comedians: [Comedian!]!
+  description: String
+  startTime: DateTime!
+  checkoutUrl: String!
+  venue: Venue!
+  price: Float
+  soldOut: Boolean @default(value: "false")
+  stubsiteId: Int @unique
+  cellarId: Int @unique
+  ticketmasterId: String @unique
+  createdAt: DateTime! # optional system field
+  updatedAt: DateTime! # optional system field
+}
+
+type Venue @model {
+  id: ID! @unique
+  name: String!
+  slug: String! @unique
+  description: String
+  url: String!
+  stubsiteId: Int @unique
+  ticketmasterId: String @unique
+  shows: [Show!]!
+  lineOne: String!
+  lineTwo: String
+  zip: Int!
+  city: String!
+  state: String!
+  latitude: Float!
+  longitude: Float!
+  scraper: ScraperType!
+  createdAt: DateTime! # optional system field
+  updatedAt: DateTime! # optional system field
+}

@@ -6,82 +6,81 @@ import {
   value,
   find,
   filter,
-  compact,
+  compact
 } from "lodash";
-import prisma from "./db";
-import {ScrapedShow} from "./scrapers/interfaces"
+import db from "./db";
+import { ScrapedShow } from "./scrapers/interfaces";
 import { slugify, getInSequence } from "./utils";
+
 // Queries
 const fetchComediansBySlugs = (slugs: string[]) => {
-  return prisma.query.comedians(
+  return db.query.comedians(
     {
       where: {
-        slug_in: slugs,
-      },
+        slug_in: slugs
+      }
     },
     "{ id slug }"
   );
 };
 
-const createComedian = (comedian) => {
-  return prisma.mutation.createComedian(
+const createComedian = comedian => {
+  return db.mutation.createComedian(
     {
-      data: comedian,
+      data: comedian
     },
     "{ id slug }"
   );
 };
 
-const upsertShow = async (show) => {
+const upsertShow = async show => {
   const {
     stubsiteId,
     cellarId,
     ticketmasterId,
     soldOut,
     price,
-    comedians,
+    comedians
   } = show;
   const where = { stubsiteId, cellarId, ticketmasterId };
-  const existingShow = await prisma.query.show(
-    { where },
-    `{id comedians {id}}`
-  );
+  const existingShow = await db.query.show({ where }, `{id comedians {id}}`);
 
   if (existingShow) {
     const newComedians = {
       connect: filter(
         comedians.connect,
         comedian => !find(existingShow.comedians, { id: comedian.id })
-      ),
+      )
     };
-    return prisma.mutation.updateShow(
+    return db.mutation.updateShow(
       {
         where: {
-          id: existingShow.id,
+          id: existingShow.id
         },
         data: {
           soldOut,
           price,
-          comedians: newComedians,
-        },
+          comedians: newComedians
+        }
       },
       "{id}"
     );
   } else {
-    return prisma.mutation.createShow(
+    return db.mutation.createShow(
       {
-        data: show,
+        data: show
       },
       `{id}`
     );
   }
 };
-const upsertShows = (shows) => getInSequence(shows, (show) =>
-  upsertShow(show).then(show => show.id));
+const upsertShows = shows =>
+  getInSequence(shows, show => upsertShow(show).then(show => show.id));
 
-const createComedians = (comedians) => Promise.all(comedians.map(comedian =>createComedian(comedian)));
+const createComedians = comedians =>
+  Promise.all(comedians.map(comedian => createComedian(comedian)));
 
-const findExistingComedians = (comedians) => {
+const findExistingComedians = comedians => {
   const slugs = map(comedians, "slug");
   return fetchComediansBySlugs(slugs).then(comedianSlugIdTuples => {
     return map(comedians, comedian => {
@@ -94,7 +93,7 @@ const findExistingComedians = (comedians) => {
   });
 };
 
-const findOrCreateComedians = async (shows) => {
+const findOrCreateComedians = async shows => {
   console.log(JSON.stringify(shows));
   const uniqComedians = chain(shows)
     .map("comedians")
@@ -127,7 +126,7 @@ const bulkFormatShowsAndFindOrCreateComedians = async (shows, venueId) => {
   const showsForInsert = showsWithSlugs.map(show =>
     formatShowForInsert(show, allComedians, venueId)
   );
-  console.log(showsForInsert)
+  console.log(showsForInsert);
   return showsForInsert;
 };
 
@@ -137,13 +136,13 @@ function formatShowForInsert(showData, allComedians, venueId) {
   return {
     venue: {
       connect: {
-        id: venueId,
-      },
+        id: venueId
+      }
     },
     comedians: {
-      connect: comedianConnectIds,
+      connect: comedianConnectIds
     },
-    ...showInfo,
+    ...showInfo
   };
 }
 
@@ -153,7 +152,7 @@ function getComedianIds(comedians, allComedians) {
       const existingComedian = find(allComedians, { slug: comedian.slug });
       if (existingComedian) {
         return {
-          id: existingComedian.id,
+          id: existingComedian.id
         };
       }
     })
@@ -162,7 +161,11 @@ function getComedianIds(comedians, allComedians) {
   return ids;
 }
 
-export default function findOrCreateShows(shows: ScrapedShow[], venueId: string) {
-  return bulkFormatShowsAndFindOrCreateComedians(shows, venueId).then(shows => upsertShows(shows));
-};
-
+export default function findOrCreateShows(
+  shows: ScrapedShow[],
+  venueId: string
+) {
+  return bulkFormatShowsAndFindOrCreateComedians(shows, venueId).then(shows =>
+    upsertShows(shows)
+  );
+}

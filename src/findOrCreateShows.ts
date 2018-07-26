@@ -76,10 +76,10 @@ const upsertShow = async (show) => {
     );
   }
 };
+const upsertShows = (shows) => getInSequence(shows, (show) =>
+  upsertShow(show).then(show => show.id));
 
 const createComedians = (comedians) => Promise.all(comedians.map(comedian =>createComedian(comedian)));
-const upsertShows = (shows) => getInSequence(shows, (show) =>
-  upsertShow(show));
 
 const findExistingComedians = (comedians) => {
   const slugs = map(comedians, "slug");

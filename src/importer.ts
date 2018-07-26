@@ -11,9 +11,9 @@ const getShows = async (venue: Venue) => {
 
 export async function importShows(venue: Venue)  {
   const showData = await getShows(venue)
-  const shows = await findOrCreateShows(showData, venue.id)
-  console.log(`${shows.length} updated for ${venue.name}`)
-  return shows
+  const showIds = await findOrCreateShows(showData, venue.id)
+  console.log(`${showIds.length} updated for ${venue.name}`)
+  return showIds
 }
 
 

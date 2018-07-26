@@ -3,7 +3,7 @@ import { importSchema } from 'graphql-import'
 import { Prisma } from './generated/prisma'
 import { Context } from './utils'
 import { forwardTo } from "prisma-binding";
-import { findOrCreateShows } from "./formatComedians";
+import { importShows } from "./importer";
 import { map } from "lodash";
 
 
@@ -41,10 +41,10 @@ const resolvers = {
         info,
       )
     },
-    async findOrCreateShows(parent, { shows }, ctx: Context, info) {
-      //  returns an array of {id: } objects containing a show Id
-      const showIdResponse = await findOrCreateShows(ctx.db, shows);
-      const showIds = map(showIdResponse, "id");
+    async updateShowsForVenue(parent, { where }, ctx: Context, info) {
+      //  returnns an array of {id: } objects containing a show Id
+      const venue = await ctx.db.query.venue({where})
+      const showIds = await importShows(venue);
       return ctx.db.query.shows({ where: { id_in: showIds } }, info);
     },
 

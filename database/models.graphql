@@ -3,6 +3,7 @@ type Comedian @model {
   slug: String! @unique
   name: String!
   website: String
+  url: String
   imageUrl: String
   stubsiteId: Int @unique
   ticketmasterId: String @unique

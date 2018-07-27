@@ -11,7 +11,7 @@ const axios = Axios.create({
   }
 });
 
-function fetchEvents({ ticketmasterId }) {
+function fetchEvents(ticketmasterId: string) {
   return axios
     .get("events", {
       params: {
@@ -37,7 +37,7 @@ function formatAttractionAsComedian({ id, name, images }) {
     ticketmasterId: id,
     imageUrl: undefined
   };
-  const image = find(images, { fallback: false });
+  const image = find(images);
   if (image) {
     comedian.imageUrl = image.url;
   }
@@ -48,7 +48,7 @@ function formatAttractions(attractions = []) {
   return attractions.map(formatAttractionAsComedian);
 }
 
-function formatEventAsShow(event): ScrapedShow {
+function formatEventAsShow(event: any): ScrapedShow {
   const {
     name,
     id,
@@ -69,7 +69,7 @@ function formatEventAsShow(event): ScrapedShow {
   };
 }
 
-function formatEvents(events) {
+function formatEvents(events: any[]) {
   return events.map(formatEventAsShow);
 }
 
@@ -86,7 +86,7 @@ function formatEvents(events) {
 //   return getInSequence(shows, addPriceAndSoldOutFromCheckoutPage);
 // }
 
-export function getEvents(ticketmasterId) {
-  return fetchEvents({ ticketmasterId }).then(formatEvents);
+export function getEvents(ticketmasterId: string) {
+  return fetchEvents(ticketmasterId).then(formatEvents);
   // .then(addCheckoutInfo);
 }

@@ -1,23 +1,21 @@
-import { Prisma } from './generated/prisma'
+import { Prisma } from "./generated/prisma";
 
 export interface Context {
-  db: Prisma
-  request: any
+  db: Prisma;
+  request: any;
 }
 
-
-export function getInSequence(array, asyncFunc) {
+export function getInSequence(array: any[], asyncFunc: any): Promise<any[]> {
   return array.reduce(
     (previous, current) =>
-      previous.then(accumulator =>
-        asyncFunc(current).then(result => accumulator.concat(result))
+      previous.then((accumulator: any) =>
+        asyncFunc(current).then((result: any) => accumulator.concat(result))
       ),
     Promise.resolve([])
   );
 }
 
-
-export function slugify(text) {
+export function slugify(text: string) {
   return text
     .toString()
     .toLowerCase()

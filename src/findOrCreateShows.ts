@@ -1,6 +1,7 @@
 import { chain, map, flatten, find, filter } from "lodash";
 import db from "./db";
-import { ScrapedShow } from "./scrapers/interfaces";
+import { ComedianCreateInput } from "./generated/prisma";
+import { ScrapedShow, ScrapedComedian } from "./scrapers/interfaces";
 import { slugify, getInSequence } from "./utils";
 
 // Queries
@@ -67,15 +68,17 @@ const upsertShow = async show => {
 const upsertShows = shows =>
   getInSequence(shows, show => upsertShow(show).then(show => show.id));
 
-const createComedians = comedians =>
+const createComedians = (comedians: ScrapedComedian[]) =>
   Promise.all(comedians.map(comedian => createComedian(comedian)));
 
 const findExistingComedians = comedians => {
   const slugs = map(comedians, "slug");
   return fetchComediansBySlugs(slugs).then(comedianSlugIdTuples => {
     return map(comedians, comedian => {
-      const dbRecord = find(comedianSlugIdTuples, { slug: comedian.slug });
-      if (dbRecord) {
+      const dbRecord = find(comedianSlugIdTuples, {
+        slug: comedian.slug
+      }) as any;
+      if (dbRecord && dbRecord.id) {
         comedian.id = dbRecord.id;
       }
       return comedian;
@@ -96,17 +99,20 @@ const findOrCreateComedians = async shows => {
   const existingComedians = filter(comediansWithIds, "id");
   const newComedians = filter(comediansWithIds, comedian => !comedian.id);
   const createdComedians = await createComedians(newComedians);
-  return flatten(existingComedians, createdComedians);
+  return flatten([existingComedians, createdComedians]);
 };
 
 const addSlugToShowsComedians = shows => map(shows, addSlugToShowComedians);
 
-function addSlugToShowComedians(show) {
+function addSlugToShowComedians(show: ScrapedShow) {
   show.comedians = map(show.comedians, slugifyComedian);
   return show;
 }
-const slugifyComedian = comedian => {
-  comedian.slug = slugify(comedian.name);
+const slugifyComedian = (scrapedComedian: ScrapedComedian) => {
+  const comedian: ComedianCreateInput = {
+    ...scrapedComedian,
+    slug: slugify(scrapedComedian.name)
+  };
   return comedian;
 };
 
@@ -139,7 +145,9 @@ function formatShowForInsert(showData, allComedians, venueId) {
 function getComedianIds(comedians, allComedians) {
   const ids = chain(comedians)
     .map(comedian => {
-      const existingComedian = find(allComedians, { slug: comedian.slug });
+      const existingComedian = find(allComedians, {
+        slug: comedian.slug
+      }) as any;
       if (existingComedian) {
         return {
           id: existingComedian.id

@@ -1,6 +1,5 @@
 # The endpoint of your Prisma API (deployed to a Prisma Sandbox).
-endpoint: http://localhost:4466
-
+endpoint: https://standupin-dev.herokuapp.com/noahslist-api/staging
 # The file containing the definition of your data model.
 datamodel:
   - models.graphql

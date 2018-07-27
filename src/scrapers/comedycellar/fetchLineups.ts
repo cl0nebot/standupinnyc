@@ -33,7 +33,7 @@ const lineupSelectors = {
   comedian: {
     container: ".comedian-block",
     name: ".comedian-block-desc-name",
-    website: ".comedian-website-link",
+    url: ".comedian-website-link",
     imageUrl: ".comedian-block-image > img"
   },
   reservationLink: ".make-comedy-reservation-link"
@@ -79,8 +79,8 @@ const parseShowHtml = ($, showHtml) => {
         .split(":");
       const name = nameArray[nameArray.length - 1].trim();
 
-      const website = $(this)
-        .find(lineupSelectors.comedian.website)
+      const url = $(this)
+        .find(lineupSelectors.comedian.url)
         .attr("href");
       // thumbnail url on this page is tiny but we can find the original by stripping 70x70 from the url
       const smallImageUrl = $(this)
@@ -89,7 +89,7 @@ const parseShowHtml = ($, showHtml) => {
       const imageUrl = smallImageUrl.replace(/-70x70\.jpg$/, ".jpg");
       comedians.push({
         name,
-        website,
+        url,
         imageUrl
       });
     });

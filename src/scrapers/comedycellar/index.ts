@@ -3,15 +3,14 @@ import * as moment from "moment";
 
 import fetchLineups from "./fetchLineups";
 import fetchReservations from "./fetchReservations";
-import {Scraper} from "../interfaces"
-
-
-
+import { Scraper, ScrapedShow } from "../interfaces";
 
 const combineLineupAndReservationData = ([reservationData, lineupData]) => {
   const shows = lineupData.map(lineup => {
     // console.log(data.timestamp)
-    const reservation = find(reservationData, { timestamp: lineup.cellarId });
+    const reservation = find(reservationData, {
+      timestamp: lineup.cellarId
+    }) as any;
     if (reservation) {
       lineup.startTime = moment(reservation.timestamp * 1000).toDate();
       delete reservation.timestamp;
@@ -54,22 +53,22 @@ async function getUpcomingShows(maxDays = 7) {
 }
 
 function removeVenueSlug(show) {
-  const {venueSlug, ...showWithoutVenueSlug} = show
-  return showWithoutVenueSlug
+  const { venueSlug, ...showWithoutVenueSlug } = show;
+  return showWithoutVenueSlug;
 }
 
-export async function getShowsForVenue(slug) {
-  const allShows = await getUpcomingShows()
-  console.log("Shows found:", allShows)
-  const venueShows = allShows.filter((lineup) => lineup.venueSlug === slug).map(removeVenueSlug)
-  console.log(slug, venueShows.length)
-  return venueShows
-
+export async function getShowsForVenue(slug: string): Promise<ScrapedShow[]> {
+  const allShows = await getUpcomingShows();
+  const venueShows = allShows
+    .filter((lineup: any) => lineup.venueSlug === slug)
+    .map(removeVenueSlug);
+  console.log(slug, venueShows.length);
+  return venueShows;
 }
 
 const comedycellar: Scraper = {
   getShowsForVenue,
   idField: "slug"
-}
+};
 
-export default comedycellar
+export default comedycellar;

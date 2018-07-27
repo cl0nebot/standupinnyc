@@ -1,9 +1,10 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 
-const getCheckoutPage = url => axios.get(url).then(response => response.data);
+const getCheckoutPage = (url: string) =>
+  axios.get(url).then(response => response.data);
 
-const parsePriceFromCheckoutPage = html => {
+const parsePriceFromCheckoutPage = (html: string) => {
   const $ = cheerio.load(html);
   const priceString = $(".price")
     .first()
@@ -23,6 +24,6 @@ const parsePriceFromCheckoutPage = html => {
 
 // Ticketmaster doesn't return prices in their api
 // so we have to parse it from the checkout page
-export function getPrice(url) {
+export function getPrice(url: string) {
   return getCheckoutPage(url).then(parsePriceFromCheckoutPage);
 }

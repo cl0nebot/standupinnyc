@@ -4,10 +4,10 @@ import { Options } from "graphql-binding";
 import { makePrismaBindingClass, BasePrismaOptions } from "prisma-binding";
 
 export interface Query {
-  comedians: <T = Comedian[]>(
+  videos: <T = Video[]>(
     args: {
-      where?: ComedianWhereInput;
-      orderBy?: ComedianOrderByInput;
+      where?: VideoWhereInput;
+      orderBy?: VideoOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -43,8 +43,21 @@ export interface Query {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
-  comedian: <T = Comedian | null>(
-    args: { where: ComedianWhereUniqueInput },
+  comedians: <T = Comedian[]>(
+    args: {
+      where?: ComedianWhereInput;
+      orderBy?: ComedianOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>;
+  video: <T = Video | null>(
+    args: { where: VideoWhereUniqueInput },
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
@@ -58,10 +71,15 @@ export interface Query {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
-  comediansConnection: <T = ComedianConnection>(
+  comedian: <T = Comedian | null>(
+    args: { where: ComedianWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>;
+  videosConnection: <T = VideoConnection>(
     args: {
-      where?: ComedianWhereInput;
-      orderBy?: ComedianOrderByInput;
+      where?: VideoWhereInput;
+      orderBy?: VideoOrderByInput;
       skip?: Int;
       after?: String;
       before?: String;
@@ -97,6 +115,19 @@ export interface Query {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
+  comediansConnection: <T = ComedianConnection>(
+    args: {
+      where?: ComedianWhereInput;
+      orderBy?: ComedianOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>;
   node: <T = Node | null>(
     args: { id: ID_Output },
     info?: GraphQLResolveInfo | string,
@@ -105,8 +136,8 @@ export interface Query {
 }
 
 export interface Mutation {
-  createComedian: <T = Comedian>(
-    args: { data: ComedianCreateInput },
+  createVideo: <T = Video>(
+    args: { data: VideoCreateInput },
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
@@ -120,8 +151,13 @@ export interface Mutation {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
-  updateComedian: <T = Comedian | null>(
-    args: { data: ComedianUpdateInput; where: ComedianWhereUniqueInput },
+  createComedian: <T = Comedian>(
+    args: { data: ComedianCreateInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>;
+  updateVideo: <T = Video | null>(
+    args: { data: VideoUpdateInput; where: VideoWhereUniqueInput },
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
@@ -135,8 +171,13 @@ export interface Mutation {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
-  deleteComedian: <T = Comedian | null>(
-    args: { where: ComedianWhereUniqueInput },
+  updateComedian: <T = Comedian | null>(
+    args: { data: ComedianUpdateInput; where: ComedianWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>;
+  deleteVideo: <T = Video | null>(
+    args: { where: VideoWhereUniqueInput },
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
@@ -150,11 +191,16 @@ export interface Mutation {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
-  upsertComedian: <T = Comedian>(
+  deleteComedian: <T = Comedian | null>(
+    args: { where: ComedianWhereUniqueInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>;
+  upsertVideo: <T = Video>(
     args: {
-      where: ComedianWhereUniqueInput;
-      create: ComedianCreateInput;
-      update: ComedianUpdateInput;
+      where: VideoWhereUniqueInput;
+      create: VideoCreateInput;
+      update: VideoUpdateInput;
     },
     info?: GraphQLResolveInfo | string,
     options?: Options
@@ -177,8 +223,17 @@ export interface Mutation {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
-  updateManyComedians: <T = BatchPayload>(
-    args: { data: ComedianUpdateInput; where?: ComedianWhereInput },
+  upsertComedian: <T = Comedian>(
+    args: {
+      where: ComedianWhereUniqueInput;
+      create: ComedianCreateInput;
+      update: ComedianUpdateInput;
+    },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>;
+  updateManyVideos: <T = BatchPayload>(
+    args: { data: VideoUpdateInput; where?: VideoWhereInput },
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
@@ -192,8 +247,13 @@ export interface Mutation {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
-  deleteManyComedians: <T = BatchPayload>(
-    args: { where?: ComedianWhereInput },
+  updateManyComedians: <T = BatchPayload>(
+    args: { data: ComedianUpdateInput; where?: ComedianWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>;
+  deleteManyVideos: <T = BatchPayload>(
+    args: { where?: VideoWhereInput },
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
@@ -207,11 +267,16 @@ export interface Mutation {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<T>;
+  deleteManyComedians: <T = BatchPayload>(
+    args: { where?: ComedianWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<T>;
 }
 
 export interface Subscription {
-  comedian: <T = ComedianSubscriptionPayload | null>(
-    args: { where?: ComedianSubscriptionWhereInput },
+  video: <T = VideoSubscriptionPayload | null>(
+    args: { where?: VideoSubscriptionWhereInput },
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<AsyncIterator<T>>;
@@ -225,12 +290,18 @@ export interface Subscription {
     info?: GraphQLResolveInfo | string,
     options?: Options
   ) => Promise<AsyncIterator<T>>;
+  comedian: <T = ComedianSubscriptionPayload | null>(
+    args: { where?: ComedianSubscriptionWhereInput },
+    info?: GraphQLResolveInfo | string,
+    options?: Options
+  ) => Promise<AsyncIterator<T>>;
 }
 
 export interface Exists {
-  Comedian: (where?: ComedianWhereInput) => Promise<boolean>;
+  Video: (where?: VideoWhereInput) => Promise<boolean>;
   Show: (where?: ShowWhereInput) => Promise<boolean>;
   Venue: (where?: VenueWhereInput) => Promise<boolean>;
+  Comedian: (where?: ComedianWhereInput) => Promise<boolean>;
 }
 
 export interface Prisma {
@@ -281,6 +352,10 @@ type AggregateVenue {
   count: Int!
 }
 
+type AggregateVideo {
+  count: Int!
+}
+
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
@@ -324,6 +399,11 @@ input ComedianCreateInput {
 input ComedianCreateManyWithoutShowsInput {
   create: [ComedianCreateWithoutShowsInput!]
   connect: [ComedianWhereUniqueInput!]
+}
+
+input ComedianCreateOneInput {
+  create: ComedianCreateInput
+  connect: ComedianWhereUniqueInput
 }
 
 input ComedianCreateWithoutShowsInput {
@@ -420,6 +500,17 @@ input ComedianSubscriptionWhereInput {
   node: ComedianWhereInput
 }
 
+input ComedianUpdateDataInput {
+  slug: String
+  name: String
+  website: String
+  url: String
+  imageUrl: String
+  stubsiteId: Int
+  ticketmasterId: String
+  shows: ShowUpdateManyWithoutComediansInput
+}
+
 input ComedianUpdateInput {
   slug: String
   name: String
@@ -440,6 +531,14 @@ input ComedianUpdateManyWithoutShowsInput {
   upsert: [ComedianUpsertWithWhereUniqueWithoutShowsInput!]
 }
 
+input ComedianUpdateOneInput {
+  create: ComedianCreateInput
+  connect: ComedianWhereUniqueInput
+  delete: Boolean
+  update: ComedianUpdateDataInput
+  upsert: ComedianUpsertNestedInput
+}
+
 input ComedianUpdateWithoutShowsDataInput {
   slug: String
   name: String
@@ -453,6 +552,11 @@ input ComedianUpdateWithoutShowsDataInput {
 input ComedianUpdateWithWhereUniqueWithoutShowsInput {
   where: ComedianWhereUniqueInput!
   data: ComedianUpdateWithoutShowsDataInput!
+}
+
+input ComedianUpsertNestedInput {
+  update: ComedianUpdateDataInput!
+  create: ComedianCreateInput!
 }
 
 input ComedianUpsertWithWhereUniqueWithoutShowsInput {
@@ -819,6 +923,9 @@ input ComedianWhereInput {
   shows_every: ShowWhereInput
   shows_some: ShowWhereInput
   shows_none: ShowWhereInput
+  _MagicalBackRelation_ComedianToVideo_every: VideoWhereInput
+  _MagicalBackRelation_ComedianToVideo_some: VideoWhereInput
+  _MagicalBackRelation_ComedianToVideo_none: VideoWhereInput
 }
 
 input ComedianWhereUniqueInput {
@@ -837,24 +944,30 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createComedian(data: ComedianCreateInput!): Comedian!
+  createVideo(data: VideoCreateInput!): Video!
   createShow(data: ShowCreateInput!): Show!
   createVenue(data: VenueCreateInput!): Venue!
-  updateComedian(data: ComedianUpdateInput!, where: ComedianWhereUniqueInput!): Comedian
+  createComedian(data: ComedianCreateInput!): Comedian!
+  updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video
   updateShow(data: ShowUpdateInput!, where: ShowWhereUniqueInput!): Show
   updateVenue(data: VenueUpdateInput!, where: VenueWhereUniqueInput!): Venue
-  deleteComedian(where: ComedianWhereUniqueInput!): Comedian
+  updateComedian(data: ComedianUpdateInput!, where: ComedianWhereUniqueInput!): Comedian
+  deleteVideo(where: VideoWhereUniqueInput!): Video
   deleteShow(where: ShowWhereUniqueInput!): Show
   deleteVenue(where: VenueWhereUniqueInput!): Venue
-  upsertComedian(where: ComedianWhereUniqueInput!, create: ComedianCreateInput!, update: ComedianUpdateInput!): Comedian!
+  deleteComedian(where: ComedianWhereUniqueInput!): Comedian
+  upsertVideo(where: VideoWhereUniqueInput!, create: VideoCreateInput!, update: VideoUpdateInput!): Video!
   upsertShow(where: ShowWhereUniqueInput!, create: ShowCreateInput!, update: ShowUpdateInput!): Show!
   upsertVenue(where: VenueWhereUniqueInput!, create: VenueCreateInput!, update: VenueUpdateInput!): Venue!
-  updateManyComedians(data: ComedianUpdateInput!, where: ComedianWhereInput): BatchPayload!
+  upsertComedian(where: ComedianWhereUniqueInput!, create: ComedianCreateInput!, update: ComedianUpdateInput!): Comedian!
+  updateManyVideos(data: VideoUpdateInput!, where: VideoWhereInput): BatchPayload!
   updateManyShows(data: ShowUpdateInput!, where: ShowWhereInput): BatchPayload!
   updateManyVenues(data: VenueUpdateInput!, where: VenueWhereInput): BatchPayload!
-  deleteManyComedians(where: ComedianWhereInput): BatchPayload!
+  updateManyComedians(data: ComedianUpdateInput!, where: ComedianWhereInput): BatchPayload!
+  deleteManyVideos(where: VideoWhereInput): BatchPayload!
   deleteManyShows(where: ShowWhereInput): BatchPayload!
   deleteManyVenues(where: VenueWhereInput): BatchPayload!
+  deleteManyComedians(where: ComedianWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -885,15 +998,18 @@ type PageInfo {
 }
 
 type Query {
-  comedians(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comedian]!
+  videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video]!
   shows(where: ShowWhereInput, orderBy: ShowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Show]!
   venues(where: VenueWhereInput, orderBy: VenueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Venue]!
-  comedian(where: ComedianWhereUniqueInput!): Comedian
+  comedians(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comedian]!
+  video(where: VideoWhereUniqueInput!): Video
   show(where: ShowWhereUniqueInput!): Show
   venue(where: VenueWhereUniqueInput!): Venue
-  comediansConnection(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ComedianConnection!
+  comedian(where: ComedianWhereUniqueInput!): Comedian
+  videosConnection(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoConnection!
   showsConnection(where: ShowWhereInput, orderBy: ShowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ShowConnection!
   venuesConnection(where: VenueWhereInput, orderBy: VenueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VenueConnection!
+  comediansConnection(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ComedianConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1514,9 +1630,10 @@ input ShowWhereUniqueInput {
 }
 
 type Subscription {
-  comedian(where: ComedianSubscriptionWhereInput): ComedianSubscriptionPayload
+  video(where: VideoSubscriptionWhereInput): VideoSubscriptionPayload
   show(where: ShowSubscriptionWhereInput): ShowSubscriptionPayload
   venue(where: VenueSubscriptionWhereInput): VenueSubscriptionPayload
+  comedian(where: ComedianSubscriptionWhereInput): ComedianSubscriptionPayload
 }
 
 type Venue implements Node {
@@ -2305,6 +2422,217 @@ input VenueWhereUniqueInput {
   stubsiteId: Int
   ticketmasterId: String
 }
+
+type Video {
+  url: String!
+  title: String!
+  source: VideoSource
+  comedian(where: ComedianWhereInput): Comedian!
+}
+
+"""A connection to a list of items."""
+type VideoConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [VideoEdge]!
+  aggregate: AggregateVideo!
+}
+
+input VideoCreateInput {
+  url: String!
+  title: String!
+  source: VideoSource
+  comedian: ComedianCreateOneInput!
+}
+
+"""An edge in a connection."""
+type VideoEdge {
+  """The item at the end of the edge."""
+  node: Video!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum VideoOrderByInput {
+  url_ASC
+  url_DESC
+  title_ASC
+  title_DESC
+  source_ASC
+  source_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type VideoPreviousValues {
+  url: String!
+  title: String!
+  source: VideoSource
+}
+
+enum VideoSource {
+  YOUTUBE
+  OTHER
+}
+
+type VideoSubscriptionPayload {
+  mutation: MutationType!
+  node: Video
+  updatedFields: [String!]
+  previousValues: VideoPreviousValues
+}
+
+input VideoSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [VideoSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [VideoSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [VideoSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: VideoWhereInput
+}
+
+input VideoUpdateInput {
+  url: String
+  title: String
+  source: VideoSource
+  comedian: ComedianUpdateOneInput
+}
+
+input VideoWhereInput {
+  """Logical AND on all given filters."""
+  AND: [VideoWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [VideoWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [VideoWhereInput!]
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  source: VideoSource
+
+  """All values that are not equal to given value."""
+  source_not: VideoSource
+
+  """All values that are contained in given list."""
+  source_in: [VideoSource!]
+
+  """All values that are not contained in given list."""
+  source_not_in: [VideoSource!]
+  comedian: ComedianWhereInput
+}
+
+input VideoWhereUniqueInput {
+  url: String
+}
 `;
 
 export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({
@@ -2317,27 +2645,19 @@ export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({
 
 export type ScraperType = "COMEDYCELLAR" | "STUBSITES" | "TICKETMASTER";
 
-export type ComedianOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "slug_ASC"
-  | "slug_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "website_ASC"
-  | "website_DESC"
+export type VideoOrderByInput =
   | "url_ASC"
   | "url_DESC"
-  | "imageUrl_ASC"
-  | "imageUrl_DESC"
-  | "stubsiteId_ASC"
-  | "stubsiteId_DESC"
-  | "ticketmasterId_ASC"
-  | "ticketmasterId_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "source_ASC"
+  | "source_DESC"
+  | "id_ASC"
+  | "id_DESC"
   | "updatedAt_ASC"
-  | "updatedAt_DESC";
+  | "updatedAt_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
 
 export type ShowOrderByInput =
   | "id_ASC"
@@ -2358,6 +2678,28 @@ export type ShowOrderByInput =
   | "stubsiteId_DESC"
   | "cellarId_ASC"
   | "cellarId_DESC"
+  | "ticketmasterId_ASC"
+  | "ticketmasterId_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type ComedianOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "slug_ASC"
+  | "slug_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "website_ASC"
+  | "website_DESC"
+  | "url_ASC"
+  | "url_DESC"
+  | "imageUrl_ASC"
+  | "imageUrl_DESC"
+  | "stubsiteId_ASC"
+  | "stubsiteId_DESC"
   | "ticketmasterId_ASC"
   | "ticketmasterId_DESC"
   | "createdAt_ASC"
@@ -2403,80 +2745,29 @@ export type VenueOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ShowCreateInput {
+export type VideoSource = "YOUTUBE" | "OTHER";
+
+export interface VenueCreateWithoutShowsInput {
   name: String;
+  slug: String;
   description?: String;
-  startTime: DateTime;
-  checkoutUrl: String;
-  price?: Float;
-  soldOut?: Boolean;
+  url: String;
   stubsiteId?: Int;
-  cellarId?: Int;
   ticketmasterId?: String;
-  comedians?: ComedianCreateManyWithoutShowsInput;
-  venue: VenueCreateOneWithoutShowsInput;
+  lineOne: String;
+  lineTwo?: String;
+  zip: Int;
+  city: String;
+  state: String;
+  latitude: Float;
+  longitude: Float;
+  scraper: ScraperType;
 }
 
-export interface ComedianWhereInput {
-  AND?: ComedianWhereInput[] | ComedianWhereInput;
-  OR?: ComedianWhereInput[] | ComedianWhereInput;
-  NOT?: ComedianWhereInput[] | ComedianWhereInput;
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  slug?: String;
-  slug_not?: String;
-  slug_in?: String[] | String;
-  slug_not_in?: String[] | String;
-  slug_lt?: String;
-  slug_lte?: String;
-  slug_gt?: String;
-  slug_gte?: String;
-  slug_contains?: String;
-  slug_not_contains?: String;
-  slug_starts_with?: String;
-  slug_not_starts_with?: String;
-  slug_ends_with?: String;
-  slug_not_ends_with?: String;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  website?: String;
-  website_not?: String;
-  website_in?: String[] | String;
-  website_not_in?: String[] | String;
-  website_lt?: String;
-  website_lte?: String;
-  website_gt?: String;
-  website_gte?: String;
-  website_contains?: String;
-  website_not_contains?: String;
-  website_starts_with?: String;
-  website_not_starts_with?: String;
-  website_ends_with?: String;
-  website_not_ends_with?: String;
+export interface VideoWhereInput {
+  AND?: VideoWhereInput[] | VideoWhereInput;
+  OR?: VideoWhereInput[] | VideoWhereInput;
+  NOT?: VideoWhereInput[] | VideoWhereInput;
   url?: String;
   url_not?: String;
   url_in?: String[] | String;
@@ -2491,88 +2782,35 @@ export interface ComedianWhereInput {
   url_not_starts_with?: String;
   url_ends_with?: String;
   url_not_ends_with?: String;
-  imageUrl?: String;
-  imageUrl_not?: String;
-  imageUrl_in?: String[] | String;
-  imageUrl_not_in?: String[] | String;
-  imageUrl_lt?: String;
-  imageUrl_lte?: String;
-  imageUrl_gt?: String;
-  imageUrl_gte?: String;
-  imageUrl_contains?: String;
-  imageUrl_not_contains?: String;
-  imageUrl_starts_with?: String;
-  imageUrl_not_starts_with?: String;
-  imageUrl_ends_with?: String;
-  imageUrl_not_ends_with?: String;
-  stubsiteId?: Int;
-  stubsiteId_not?: Int;
-  stubsiteId_in?: Int[] | Int;
-  stubsiteId_not_in?: Int[] | Int;
-  stubsiteId_lt?: Int;
-  stubsiteId_lte?: Int;
-  stubsiteId_gt?: Int;
-  stubsiteId_gte?: Int;
-  ticketmasterId?: String;
-  ticketmasterId_not?: String;
-  ticketmasterId_in?: String[] | String;
-  ticketmasterId_not_in?: String[] | String;
-  ticketmasterId_lt?: String;
-  ticketmasterId_lte?: String;
-  ticketmasterId_gt?: String;
-  ticketmasterId_gte?: String;
-  ticketmasterId_contains?: String;
-  ticketmasterId_not_contains?: String;
-  ticketmasterId_starts_with?: String;
-  ticketmasterId_not_starts_with?: String;
-  ticketmasterId_ends_with?: String;
-  ticketmasterId_not_ends_with?: String;
-  createdAt?: DateTime;
-  createdAt_not?: DateTime;
-  createdAt_in?: DateTime[] | DateTime;
-  createdAt_not_in?: DateTime[] | DateTime;
-  createdAt_lt?: DateTime;
-  createdAt_lte?: DateTime;
-  createdAt_gt?: DateTime;
-  createdAt_gte?: DateTime;
-  updatedAt?: DateTime;
-  updatedAt_not?: DateTime;
-  updatedAt_in?: DateTime[] | DateTime;
-  updatedAt_not_in?: DateTime[] | DateTime;
-  updatedAt_lt?: DateTime;
-  updatedAt_lte?: DateTime;
-  updatedAt_gt?: DateTime;
-  updatedAt_gte?: DateTime;
-  shows_every?: ShowWhereInput;
-  shows_some?: ShowWhereInput;
-  shows_none?: ShowWhereInput;
+  title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
+  source?: VideoSource;
+  source_not?: VideoSource;
+  source_in?: VideoSource[] | VideoSource;
+  source_not_in?: VideoSource[] | VideoSource;
+  comedian?: ComedianWhereInput;
 }
 
-export interface ShowUpdateInput {
-  name?: String;
-  description?: String;
-  startTime?: DateTime;
-  checkoutUrl?: String;
-  price?: Float;
-  soldOut?: Boolean;
-  stubsiteId?: Int;
-  cellarId?: Int;
-  ticketmasterId?: String;
-  comedians?: ComedianUpdateManyWithoutShowsInput;
-  venue?: VenueUpdateOneWithoutShowsInput;
+export interface ComedianUpsertNestedInput {
+  update: ComedianUpdateDataInput;
+  create: ComedianCreateInput;
 }
 
-export interface ShowUpdateWithoutComediansDataInput {
-  name?: String;
-  description?: String;
-  startTime?: DateTime;
-  checkoutUrl?: String;
-  price?: Float;
-  soldOut?: Boolean;
-  stubsiteId?: Int;
-  cellarId?: Int;
-  ticketmasterId?: String;
-  venue?: VenueUpdateOneWithoutShowsInput;
+export interface ShowUpdateWithWhereUniqueWithoutComediansInput {
+  where: ShowWhereUniqueInput;
+  data: ShowUpdateWithoutComediansDataInput;
 }
 
 export interface ShowUpsertWithWhereUniqueWithoutComediansInput {
@@ -2581,9 +2819,22 @@ export interface ShowUpsertWithWhereUniqueWithoutComediansInput {
   create: ShowCreateWithoutComediansInput;
 }
 
-export interface ShowCreateManyWithoutVenueInput {
-  create?: ShowCreateWithoutVenueInput[] | ShowCreateWithoutVenueInput;
-  connect?: ShowWhereUniqueInput[] | ShowWhereUniqueInput;
+export interface VenueCreateInput {
+  name: String;
+  slug: String;
+  description?: String;
+  url: String;
+  stubsiteId?: Int;
+  ticketmasterId?: String;
+  lineOne: String;
+  lineTwo?: String;
+  zip: Int;
+  city: String;
+  state: String;
+  latitude: Float;
+  longitude: Float;
+  scraper: ScraperType;
+  shows?: ShowCreateManyWithoutVenueInput;
 }
 
 export interface VenueUpsertWithoutShowsInput {
@@ -2738,10 +2989,193 @@ export interface VenueUpdateWithoutShowsDataInput {
   scraper?: ScraperType;
 }
 
-export interface ShowUpsertWithWhereUniqueWithoutVenueInput {
-  where: ShowWhereUniqueInput;
-  update: ShowUpdateWithoutVenueDataInput;
-  create: ShowCreateWithoutVenueInput;
+export interface ShowSubscriptionWhereInput {
+  AND?: ShowSubscriptionWhereInput[] | ShowSubscriptionWhereInput;
+  OR?: ShowSubscriptionWhereInput[] | ShowSubscriptionWhereInput;
+  NOT?: ShowSubscriptionWhereInput[] | ShowSubscriptionWhereInput;
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ShowWhereInput;
+}
+
+export interface VenueUpdateOneWithoutShowsInput {
+  create?: VenueCreateWithoutShowsInput;
+  connect?: VenueWhereUniqueInput;
+  delete?: Boolean;
+  update?: VenueUpdateWithoutShowsDataInput;
+  upsert?: VenueUpsertWithoutShowsInput;
+}
+
+export interface ComedianWhereInput {
+  AND?: ComedianWhereInput[] | ComedianWhereInput;
+  OR?: ComedianWhereInput[] | ComedianWhereInput;
+  NOT?: ComedianWhereInput[] | ComedianWhereInput;
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  slug?: String;
+  slug_not?: String;
+  slug_in?: String[] | String;
+  slug_not_in?: String[] | String;
+  slug_lt?: String;
+  slug_lte?: String;
+  slug_gt?: String;
+  slug_gte?: String;
+  slug_contains?: String;
+  slug_not_contains?: String;
+  slug_starts_with?: String;
+  slug_not_starts_with?: String;
+  slug_ends_with?: String;
+  slug_not_ends_with?: String;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  website?: String;
+  website_not?: String;
+  website_in?: String[] | String;
+  website_not_in?: String[] | String;
+  website_lt?: String;
+  website_lte?: String;
+  website_gt?: String;
+  website_gte?: String;
+  website_contains?: String;
+  website_not_contains?: String;
+  website_starts_with?: String;
+  website_not_starts_with?: String;
+  website_ends_with?: String;
+  website_not_ends_with?: String;
+  url?: String;
+  url_not?: String;
+  url_in?: String[] | String;
+  url_not_in?: String[] | String;
+  url_lt?: String;
+  url_lte?: String;
+  url_gt?: String;
+  url_gte?: String;
+  url_contains?: String;
+  url_not_contains?: String;
+  url_starts_with?: String;
+  url_not_starts_with?: String;
+  url_ends_with?: String;
+  url_not_ends_with?: String;
+  imageUrl?: String;
+  imageUrl_not?: String;
+  imageUrl_in?: String[] | String;
+  imageUrl_not_in?: String[] | String;
+  imageUrl_lt?: String;
+  imageUrl_lte?: String;
+  imageUrl_gt?: String;
+  imageUrl_gte?: String;
+  imageUrl_contains?: String;
+  imageUrl_not_contains?: String;
+  imageUrl_starts_with?: String;
+  imageUrl_not_starts_with?: String;
+  imageUrl_ends_with?: String;
+  imageUrl_not_ends_with?: String;
+  stubsiteId?: Int;
+  stubsiteId_not?: Int;
+  stubsiteId_in?: Int[] | Int;
+  stubsiteId_not_in?: Int[] | Int;
+  stubsiteId_lt?: Int;
+  stubsiteId_lte?: Int;
+  stubsiteId_gt?: Int;
+  stubsiteId_gte?: Int;
+  ticketmasterId?: String;
+  ticketmasterId_not?: String;
+  ticketmasterId_in?: String[] | String;
+  ticketmasterId_not_in?: String[] | String;
+  ticketmasterId_lt?: String;
+  ticketmasterId_lte?: String;
+  ticketmasterId_gt?: String;
+  ticketmasterId_gte?: String;
+  ticketmasterId_contains?: String;
+  ticketmasterId_not_contains?: String;
+  ticketmasterId_starts_with?: String;
+  ticketmasterId_not_starts_with?: String;
+  ticketmasterId_ends_with?: String;
+  ticketmasterId_not_ends_with?: String;
+  createdAt?: DateTime;
+  createdAt_not?: DateTime;
+  createdAt_in?: DateTime[] | DateTime;
+  createdAt_not_in?: DateTime[] | DateTime;
+  createdAt_lt?: DateTime;
+  createdAt_lte?: DateTime;
+  createdAt_gt?: DateTime;
+  createdAt_gte?: DateTime;
+  updatedAt?: DateTime;
+  updatedAt_not?: DateTime;
+  updatedAt_in?: DateTime[] | DateTime;
+  updatedAt_not_in?: DateTime[] | DateTime;
+  updatedAt_lt?: DateTime;
+  updatedAt_lte?: DateTime;
+  updatedAt_gt?: DateTime;
+  updatedAt_gte?: DateTime;
+  shows_every?: ShowWhereInput;
+  shows_some?: ShowWhereInput;
+  shows_none?: ShowWhereInput;
+  _MagicalBackRelation_ComedianToVideo_every?: VideoWhereInput;
+  _MagicalBackRelation_ComedianToVideo_some?: VideoWhereInput;
+  _MagicalBackRelation_ComedianToVideo_none?: VideoWhereInput;
+}
+
+export interface VideoCreateInput {
+  url: String;
+  title: String;
+  source?: VideoSource;
+  comedian: ComedianCreateOneInput;
+}
+
+export interface ComedianUpdateInput {
+  slug?: String;
+  name?: String;
+  website?: String;
+  url?: String;
+  imageUrl?: String;
+  stubsiteId?: Int;
+  ticketmasterId?: String;
+  shows?: ShowUpdateManyWithoutComediansInput;
+}
+
+export interface ComedianCreateOneInput {
+  create?: ComedianCreateInput;
+  connect?: ComedianWhereUniqueInput;
+}
+
+export interface ShowUpdateWithoutVenueDataInput {
+  name?: String;
+  description?: String;
+  startTime?: DateTime;
+  checkoutUrl?: String;
+  price?: Float;
+  soldOut?: Boolean;
+  stubsiteId?: Int;
+  cellarId?: Int;
+  ticketmasterId?: String;
+  comedians?: ComedianUpdateManyWithoutShowsInput;
 }
 
 export interface ComedianCreateInput {
@@ -2755,9 +3189,11 @@ export interface ComedianCreateInput {
   shows?: ShowCreateManyWithoutComediansInput;
 }
 
-export interface ShowUpdateWithWhereUniqueWithoutVenueInput {
-  where: ShowWhereUniqueInput;
-  data: ShowUpdateWithoutVenueDataInput;
+export interface ShowWhereUniqueInput {
+  id?: ID_Input;
+  stubsiteId?: Int;
+  cellarId?: Int;
+  ticketmasterId?: String;
 }
 
 export interface ShowCreateManyWithoutComediansInput {
@@ -2765,10 +3201,10 @@ export interface ShowCreateManyWithoutComediansInput {
   connect?: ShowWhereUniqueInput[] | ShowWhereUniqueInput;
 }
 
-export interface ShowWhereUniqueInput {
+export interface ComedianWhereUniqueInput {
   id?: ID_Input;
+  slug?: String;
   stubsiteId?: Int;
-  cellarId?: Int;
   ticketmasterId?: String;
 }
 
@@ -2809,21 +3245,17 @@ export interface ComedianUpsertWithWhereUniqueWithoutShowsInput {
   create: ComedianCreateWithoutShowsInput;
 }
 
-export interface VenueCreateWithoutShowsInput {
-  name: String;
-  slug: String;
+export interface ShowUpdateWithoutComediansDataInput {
+  name?: String;
   description?: String;
-  url: String;
+  startTime?: DateTime;
+  checkoutUrl?: String;
+  price?: Float;
+  soldOut?: Boolean;
   stubsiteId?: Int;
+  cellarId?: Int;
   ticketmasterId?: String;
-  lineOne: String;
-  lineTwo?: String;
-  zip: Int;
-  city: String;
-  state: String;
-  latitude: Float;
-  longitude: Float;
-  scraper: ScraperType;
+  venue?: VenueUpdateOneWithoutShowsInput;
 }
 
 export interface ComedianUpdateWithWhereUniqueWithoutShowsInput {
@@ -2831,12 +3263,37 @@ export interface ComedianUpdateWithWhereUniqueWithoutShowsInput {
   data: ComedianUpdateWithoutShowsDataInput;
 }
 
-export interface VenueUpdateOneWithoutShowsInput {
-  create?: VenueCreateWithoutShowsInput;
-  connect?: VenueWhereUniqueInput;
-  delete?: Boolean;
-  update?: VenueUpdateWithoutShowsDataInput;
-  upsert?: VenueUpsertWithoutShowsInput;
+export interface ShowCreateInput {
+  name: String;
+  description?: String;
+  startTime: DateTime;
+  checkoutUrl: String;
+  price?: Float;
+  soldOut?: Boolean;
+  stubsiteId?: Int;
+  cellarId?: Int;
+  ticketmasterId?: String;
+  comedians?: ComedianCreateManyWithoutShowsInput;
+  venue: VenueCreateOneWithoutShowsInput;
+}
+
+export interface ShowUpdateInput {
+  name?: String;
+  description?: String;
+  startTime?: DateTime;
+  checkoutUrl?: String;
+  price?: Float;
+  soldOut?: Boolean;
+  stubsiteId?: Int;
+  cellarId?: Int;
+  ticketmasterId?: String;
+  comedians?: ComedianUpdateManyWithoutShowsInput;
+  venue?: VenueUpdateOneWithoutShowsInput;
+}
+
+export interface ComedianCreateManyWithoutShowsInput {
+  create?: ComedianCreateWithoutShowsInput[] | ComedianCreateWithoutShowsInput;
+  connect?: ComedianWhereUniqueInput[] | ComedianWhereUniqueInput;
 }
 
 export interface VenueSubscriptionWhereInput {
@@ -2850,22 +3307,6 @@ export interface VenueSubscriptionWhereInput {
   node?: VenueWhereInput;
 }
 
-export interface ComedianCreateManyWithoutShowsInput {
-  create?: ComedianCreateWithoutShowsInput[] | ComedianCreateWithoutShowsInput;
-  connect?: ComedianWhereUniqueInput[] | ComedianWhereUniqueInput;
-}
-
-export interface ComedianSubscriptionWhereInput {
-  AND?: ComedianSubscriptionWhereInput[] | ComedianSubscriptionWhereInput;
-  OR?: ComedianSubscriptionWhereInput[] | ComedianSubscriptionWhereInput;
-  NOT?: ComedianSubscriptionWhereInput[] | ComedianSubscriptionWhereInput;
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ComedianWhereInput;
-}
-
 export interface ComedianCreateWithoutShowsInput {
   slug: String;
   name: String;
@@ -2876,47 +3317,15 @@ export interface ComedianCreateWithoutShowsInput {
   ticketmasterId?: String;
 }
 
-export interface ComedianWhereUniqueInput {
-  id?: ID_Input;
-  slug?: String;
-  stubsiteId?: Int;
-  ticketmasterId?: String;
-}
-
-export interface VenueCreateInput {
-  name: String;
-  slug: String;
-  description?: String;
-  url: String;
-  stubsiteId?: Int;
-  ticketmasterId?: String;
-  lineOne: String;
-  lineTwo?: String;
-  zip: Int;
-  city: String;
-  state: String;
-  latitude: Float;
-  longitude: Float;
-  scraper: ScraperType;
-  shows?: ShowCreateManyWithoutVenueInput;
-}
-
-export interface VenueUpdateInput {
-  name?: String;
-  slug?: String;
-  description?: String;
-  url?: String;
-  stubsiteId?: Int;
-  ticketmasterId?: String;
-  lineOne?: String;
-  lineTwo?: String;
-  zip?: Int;
-  city?: String;
-  state?: String;
-  latitude?: Float;
-  longitude?: Float;
-  scraper?: ScraperType;
-  shows?: ShowUpdateManyWithoutVenueInput;
+export interface VideoSubscriptionWhereInput {
+  AND?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
+  OR?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
+  NOT?: VideoSubscriptionWhereInput[] | VideoSubscriptionWhereInput;
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: VideoWhereInput;
 }
 
 export interface VenueWhereInput {
@@ -3120,46 +3529,18 @@ export interface VenueWhereInput {
   shows_none?: ShowWhereInput;
 }
 
-export interface ComedianUpdateManyWithoutShowsInput {
-  create?: ComedianCreateWithoutShowsInput[] | ComedianCreateWithoutShowsInput;
-  connect?: ComedianWhereUniqueInput[] | ComedianWhereUniqueInput;
-  disconnect?: ComedianWhereUniqueInput[] | ComedianWhereUniqueInput;
-  delete?: ComedianWhereUniqueInput[] | ComedianWhereUniqueInput;
-  update?:
-    | ComedianUpdateWithWhereUniqueWithoutShowsInput[]
-    | ComedianUpdateWithWhereUniqueWithoutShowsInput;
-  upsert?:
-    | ComedianUpsertWithWhereUniqueWithoutShowsInput[]
-    | ComedianUpsertWithWhereUniqueWithoutShowsInput;
-}
-
-export interface ShowUpdateWithWhereUniqueWithoutComediansInput {
-  where: ShowWhereUniqueInput;
-  data: ShowUpdateWithoutComediansDataInput;
-}
-
-export interface ShowUpdateManyWithoutComediansInput {
-  create?: ShowCreateWithoutComediansInput[] | ShowCreateWithoutComediansInput;
-  connect?: ShowWhereUniqueInput[] | ShowWhereUniqueInput;
-  disconnect?: ShowWhereUniqueInput[] | ShowWhereUniqueInput;
-  delete?: ShowWhereUniqueInput[] | ShowWhereUniqueInput;
-  update?:
-    | ShowUpdateWithWhereUniqueWithoutComediansInput[]
-    | ShowUpdateWithWhereUniqueWithoutComediansInput;
-  upsert?:
-    | ShowUpsertWithWhereUniqueWithoutComediansInput[]
-    | ShowUpsertWithWhereUniqueWithoutComediansInput;
-}
-
-export interface ComedianUpdateInput {
-  slug?: String;
-  name?: String;
-  website?: String;
+export interface VideoWhereUniqueInput {
   url?: String;
-  imageUrl?: String;
-  stubsiteId?: Int;
-  ticketmasterId?: String;
-  shows?: ShowUpdateManyWithoutComediansInput;
+}
+
+export interface ShowCreateManyWithoutVenueInput {
+  create?: ShowCreateWithoutVenueInput[] | ShowCreateWithoutVenueInput;
+  connect?: ShowWhereUniqueInput[] | ShowWhereUniqueInput;
+}
+
+export interface ShowUpdateWithWhereUniqueWithoutVenueInput {
+  where: ShowWhereUniqueInput;
+  data: ShowUpdateWithoutVenueDataInput;
 }
 
 export interface ShowCreateWithoutVenueInput {
@@ -3175,17 +3556,6 @@ export interface ShowCreateWithoutVenueInput {
   comedians?: ComedianCreateManyWithoutShowsInput;
 }
 
-export interface ShowSubscriptionWhereInput {
-  AND?: ShowSubscriptionWhereInput[] | ShowSubscriptionWhereInput;
-  OR?: ShowSubscriptionWhereInput[] | ShowSubscriptionWhereInput;
-  NOT?: ShowSubscriptionWhereInput[] | ShowSubscriptionWhereInput;
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: ShowWhereInput;
-}
-
 export interface ComedianUpdateWithoutShowsDataInput {
   slug?: String;
   name?: String;
@@ -3196,6 +3566,87 @@ export interface ComedianUpdateWithoutShowsDataInput {
   ticketmasterId?: String;
 }
 
+export interface ComedianSubscriptionWhereInput {
+  AND?: ComedianSubscriptionWhereInput[] | ComedianSubscriptionWhereInput;
+  OR?: ComedianSubscriptionWhereInput[] | ComedianSubscriptionWhereInput;
+  NOT?: ComedianSubscriptionWhereInput[] | ComedianSubscriptionWhereInput;
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ComedianWhereInput;
+}
+
+export interface ShowUpdateManyWithoutComediansInput {
+  create?: ShowCreateWithoutComediansInput[] | ShowCreateWithoutComediansInput;
+  connect?: ShowWhereUniqueInput[] | ShowWhereUniqueInput;
+  disconnect?: ShowWhereUniqueInput[] | ShowWhereUniqueInput;
+  delete?: ShowWhereUniqueInput[] | ShowWhereUniqueInput;
+  update?:
+    | ShowUpdateWithWhereUniqueWithoutComediansInput[]
+    | ShowUpdateWithWhereUniqueWithoutComediansInput;
+  upsert?:
+    | ShowUpsertWithWhereUniqueWithoutComediansInput[]
+    | ShowUpsertWithWhereUniqueWithoutComediansInput;
+}
+
+export interface ComedianUpdateDataInput {
+  slug?: String;
+  name?: String;
+  website?: String;
+  url?: String;
+  imageUrl?: String;
+  stubsiteId?: Int;
+  ticketmasterId?: String;
+  shows?: ShowUpdateManyWithoutComediansInput;
+}
+
+export interface ComedianUpdateOneInput {
+  create?: ComedianCreateInput;
+  connect?: ComedianWhereUniqueInput;
+  delete?: Boolean;
+  update?: ComedianUpdateDataInput;
+  upsert?: ComedianUpsertNestedInput;
+}
+
+export interface VideoUpdateInput {
+  url?: String;
+  title?: String;
+  source?: VideoSource;
+  comedian?: ComedianUpdateOneInput;
+}
+
+export interface ComedianUpdateManyWithoutShowsInput {
+  create?: ComedianCreateWithoutShowsInput[] | ComedianCreateWithoutShowsInput;
+  connect?: ComedianWhereUniqueInput[] | ComedianWhereUniqueInput;
+  disconnect?: ComedianWhereUniqueInput[] | ComedianWhereUniqueInput;
+  delete?: ComedianWhereUniqueInput[] | ComedianWhereUniqueInput;
+  update?:
+    | ComedianUpdateWithWhereUniqueWithoutShowsInput[]
+    | ComedianUpdateWithWhereUniqueWithoutShowsInput;
+  upsert?:
+    | ComedianUpsertWithWhereUniqueWithoutShowsInput[]
+    | ComedianUpsertWithWhereUniqueWithoutShowsInput;
+}
+
+export interface VenueUpdateInput {
+  name?: String;
+  slug?: String;
+  description?: String;
+  url?: String;
+  stubsiteId?: Int;
+  ticketmasterId?: String;
+  lineOne?: String;
+  lineTwo?: String;
+  zip?: Int;
+  city?: String;
+  state?: String;
+  latitude?: Float;
+  longitude?: Float;
+  scraper?: ScraperType;
+  shows?: ShowUpdateManyWithoutVenueInput;
+}
+
 export interface VenueWhereUniqueInput {
   id?: ID_Input;
   slug?: String;
@@ -3203,17 +3654,10 @@ export interface VenueWhereUniqueInput {
   ticketmasterId?: String;
 }
 
-export interface ShowUpdateWithoutVenueDataInput {
-  name?: String;
-  description?: String;
-  startTime?: DateTime;
-  checkoutUrl?: String;
-  price?: Float;
-  soldOut?: Boolean;
-  stubsiteId?: Int;
-  cellarId?: Int;
-  ticketmasterId?: String;
-  comedians?: ComedianUpdateManyWithoutShowsInput;
+export interface ShowUpsertWithWhereUniqueWithoutVenueInput {
+  where: ShowWhereUniqueInput;
+  update: ShowUpdateWithoutVenueDataInput;
+  create: ShowCreateWithoutVenueInput;
 }
 
 /*
@@ -3222,36 +3666,6 @@ export interface ShowUpdateWithoutVenueDataInput {
  */
 export interface Node {
   id: ID_Output;
-}
-
-export interface VenuePreviousValues {
-  id: ID_Output;
-  name: String;
-  slug: String;
-  description?: String;
-  url: String;
-  stubsiteId?: Int;
-  ticketmasterId?: String;
-  lineOne: String;
-  lineTwo?: String;
-  zip: Int;
-  city: String;
-  state: String;
-  latitude: Float;
-  longitude: Float;
-  scraper: ScraperType;
-  createdAt: DateTime;
-  updatedAt: DateTime;
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface ComedianConnection {
-  pageInfo: PageInfo;
-  edges: ComedianEdge[];
-  aggregate: AggregateComedian;
 }
 
 export interface ComedianPreviousValues {
@@ -3267,28 +3681,18 @@ export interface ComedianPreviousValues {
   updatedAt: DateTime;
 }
 
-export interface VenueSubscriptionPayload {
+export interface ComedianSubscriptionPayload {
   mutation: MutationType;
-  node?: Venue;
+  node?: Comedian;
   updatedFields?: String[];
-  previousValues?: VenuePreviousValues;
+  previousValues?: ComedianPreviousValues;
 }
 
-export interface Show extends Node {
-  id: ID_Output;
-  name: String;
-  comedians?: Comedian[];
-  description?: String;
-  startTime: DateTime;
-  checkoutUrl: String;
-  venue: Venue;
-  price?: Float;
-  soldOut?: Boolean;
-  stubsiteId?: Int;
-  cellarId?: Int;
-  ticketmasterId?: String;
-  createdAt: DateTime;
-  updatedAt: DateTime;
+export interface Video {
+  url: String;
+  title: String;
+  source?: VideoSource;
+  comedian: Comedian;
 }
 
 export interface Venue extends Node {
@@ -3316,27 +3720,10 @@ export interface Venue extends Node {
  * A connection to a list of items.
 
  */
-export interface VenueConnection {
+export interface ComedianConnection {
   pageInfo: PageInfo;
-  edges: VenueEdge[];
-  aggregate: AggregateVenue;
-}
-
-export interface AggregateVenue {
-  count: Int;
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface ShowEdge {
-  node: Show;
-  cursor: String;
-}
-
-export interface BatchPayload {
-  count: Long;
+  edges: ComedianEdge[];
+  aggregate: AggregateComedian;
 }
 
 export interface AggregateComedian {
@@ -3344,42 +3731,104 @@ export interface AggregateComedian {
 }
 
 /*
- * Information about pagination in a connection.
+ * An edge in a connection.
 
  */
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
+export interface VenueEdge {
+  node: Venue;
+  cursor: String;
 }
 
-export interface ComedianSubscriptionPayload {
-  mutation: MutationType;
-  node?: Comedian;
-  updatedFields?: String[];
-  previousValues?: ComedianPreviousValues;
+export interface BatchPayload {
+  count: Long;
 }
 
-export interface Comedian extends Node {
+export interface AggregateShow {
+  count: Int;
+}
+
+export interface VenuePreviousValues {
   id: ID_Output;
-  slug: String;
   name: String;
-  website?: String;
-  url?: String;
-  imageUrl?: String;
+  slug: String;
+  description?: String;
+  url: String;
   stubsiteId?: Int;
   ticketmasterId?: String;
-  shows?: Show[];
+  lineOne: String;
+  lineTwo?: String;
+  zip: Int;
+  city: String;
+  state: String;
+  latitude: Float;
+  longitude: Float;
+  scraper: ScraperType;
   createdAt: DateTime;
   updatedAt: DateTime;
 }
 
-export interface ShowSubscriptionPayload {
+/*
+ * A connection to a list of items.
+
+ */
+export interface ShowConnection {
+  pageInfo: PageInfo;
+  edges: ShowEdge[];
+  aggregate: AggregateShow;
+}
+
+export interface Show extends Node {
+  id: ID_Output;
+  name: String;
+  comedians?: Comedian[];
+  description?: String;
+  startTime: DateTime;
+  checkoutUrl: String;
+  venue: Venue;
+  price?: Float;
+  soldOut?: Boolean;
+  stubsiteId?: Int;
+  cellarId?: Int;
+  ticketmasterId?: String;
+  createdAt: DateTime;
+  updatedAt: DateTime;
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface VideoEdge {
+  node: Video;
+  cursor: String;
+}
+
+export interface VenueSubscriptionPayload {
   mutation: MutationType;
-  node?: Show;
+  node?: Venue;
   updatedFields?: String[];
-  previousValues?: ShowPreviousValues;
+  previousValues?: VenuePreviousValues;
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface VideoConnection {
+  pageInfo: PageInfo;
+  edges: VideoEdge[];
+  aggregate: AggregateVideo;
+}
+
+export interface VideoSubscriptionPayload {
+  mutation: MutationType;
+  node?: Video;
+  updatedFields?: String[];
+  previousValues?: VideoPreviousValues;
+}
+
+export interface AggregateVenue {
+  count: Int;
 }
 
 export interface ShowPreviousValues {
@@ -3397,13 +3846,41 @@ export interface ShowPreviousValues {
   updatedAt: DateTime;
 }
 
+export interface ShowSubscriptionPayload {
+  mutation: MutationType;
+  node?: Show;
+  updatedFields?: String[];
+  previousValues?: ShowPreviousValues;
+}
+
+export interface Comedian extends Node {
+  id: ID_Output;
+  slug: String;
+  name: String;
+  website?: String;
+  url?: String;
+  imageUrl?: String;
+  stubsiteId?: Int;
+  ticketmasterId?: String;
+  shows?: Show[];
+  createdAt: DateTime;
+  updatedAt: DateTime;
+}
+
+export interface VideoPreviousValues {
+  url: String;
+  title: String;
+  source?: VideoSource;
+}
+
 /*
- * An edge in a connection.
+ * A connection to a list of items.
 
  */
-export interface VenueEdge {
-  node: Venue;
-  cursor: String;
+export interface VenueConnection {
+  pageInfo: PageInfo;
+  edges: VenueEdge[];
+  aggregate: AggregateVenue;
 }
 
 /*
@@ -3416,18 +3893,33 @@ export interface ComedianEdge {
 }
 
 /*
- * A connection to a list of items.
+ * Information about pagination in a connection.
 
  */
-export interface ShowConnection {
-  pageInfo: PageInfo;
-  edges: ShowEdge[];
-  aggregate: AggregateShow;
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
 }
 
-export interface AggregateShow {
+export interface AggregateVideo {
   count: Int;
 }
+
+/*
+ * An edge in a connection.
+
+ */
+export interface ShowEdge {
+  node: Show;
+  cursor: String;
+}
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
@@ -3435,15 +3927,15 @@ The `Boolean` scalar type represents `true` or `false`.
 export type Boolean = boolean;
 
 /*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number;
 
 /*
 The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
@@ -3457,8 +3949,3 @@ Long can represent values between -(2^63) and 2^63 - 1.
 export type Long = string;
 
 export type DateTime = Date | string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;

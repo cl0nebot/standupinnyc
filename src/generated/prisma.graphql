@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Jul 26 2018 03:53:51 GMT-0400 (EDT)
+# timestamp: Fri Jul 27 2018 02:19:28 GMT-0400 (EDT)
 
 type AggregateComedian {
   count: Int!
@@ -10,6 +10,10 @@ type AggregateShow {
 }
 
 type AggregateVenue {
+  count: Int!
+}
+
+type AggregateVideo {
   count: Int!
 }
 
@@ -56,6 +60,11 @@ input ComedianCreateInput {
 input ComedianCreateManyWithoutShowsInput {
   create: [ComedianCreateWithoutShowsInput!]
   connect: [ComedianWhereUniqueInput!]
+}
+
+input ComedianCreateOneInput {
+  create: ComedianCreateInput
+  connect: ComedianWhereUniqueInput
 }
 
 input ComedianCreateWithoutShowsInput {
@@ -152,6 +161,17 @@ input ComedianSubscriptionWhereInput {
   node: ComedianWhereInput
 }
 
+input ComedianUpdateDataInput {
+  slug: String
+  name: String
+  website: String
+  url: String
+  imageUrl: String
+  stubsiteId: Int
+  ticketmasterId: String
+  shows: ShowUpdateManyWithoutComediansInput
+}
+
 input ComedianUpdateInput {
   slug: String
   name: String
@@ -172,6 +192,14 @@ input ComedianUpdateManyWithoutShowsInput {
   upsert: [ComedianUpsertWithWhereUniqueWithoutShowsInput!]
 }
 
+input ComedianUpdateOneInput {
+  create: ComedianCreateInput
+  connect: ComedianWhereUniqueInput
+  delete: Boolean
+  update: ComedianUpdateDataInput
+  upsert: ComedianUpsertNestedInput
+}
+
 input ComedianUpdateWithoutShowsDataInput {
   slug: String
   name: String
@@ -185,6 +213,11 @@ input ComedianUpdateWithoutShowsDataInput {
 input ComedianUpdateWithWhereUniqueWithoutShowsInput {
   where: ComedianWhereUniqueInput!
   data: ComedianUpdateWithoutShowsDataInput!
+}
+
+input ComedianUpsertNestedInput {
+  update: ComedianUpdateDataInput!
+  create: ComedianCreateInput!
 }
 
 input ComedianUpsertWithWhereUniqueWithoutShowsInput {
@@ -551,6 +584,9 @@ input ComedianWhereInput {
   shows_every: ShowWhereInput
   shows_some: ShowWhereInput
   shows_none: ShowWhereInput
+  _MagicalBackRelation_ComedianToVideo_every: VideoWhereInput
+  _MagicalBackRelation_ComedianToVideo_some: VideoWhereInput
+  _MagicalBackRelation_ComedianToVideo_none: VideoWhereInput
 }
 
 input ComedianWhereUniqueInput {
@@ -569,24 +605,30 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createComedian(data: ComedianCreateInput!): Comedian!
+  createVideo(data: VideoCreateInput!): Video!
   createShow(data: ShowCreateInput!): Show!
   createVenue(data: VenueCreateInput!): Venue!
-  updateComedian(data: ComedianUpdateInput!, where: ComedianWhereUniqueInput!): Comedian
+  createComedian(data: ComedianCreateInput!): Comedian!
+  updateVideo(data: VideoUpdateInput!, where: VideoWhereUniqueInput!): Video
   updateShow(data: ShowUpdateInput!, where: ShowWhereUniqueInput!): Show
   updateVenue(data: VenueUpdateInput!, where: VenueWhereUniqueInput!): Venue
-  deleteComedian(where: ComedianWhereUniqueInput!): Comedian
+  updateComedian(data: ComedianUpdateInput!, where: ComedianWhereUniqueInput!): Comedian
+  deleteVideo(where: VideoWhereUniqueInput!): Video
   deleteShow(where: ShowWhereUniqueInput!): Show
   deleteVenue(where: VenueWhereUniqueInput!): Venue
-  upsertComedian(where: ComedianWhereUniqueInput!, create: ComedianCreateInput!, update: ComedianUpdateInput!): Comedian!
+  deleteComedian(where: ComedianWhereUniqueInput!): Comedian
+  upsertVideo(where: VideoWhereUniqueInput!, create: VideoCreateInput!, update: VideoUpdateInput!): Video!
   upsertShow(where: ShowWhereUniqueInput!, create: ShowCreateInput!, update: ShowUpdateInput!): Show!
   upsertVenue(where: VenueWhereUniqueInput!, create: VenueCreateInput!, update: VenueUpdateInput!): Venue!
-  updateManyComedians(data: ComedianUpdateInput!, where: ComedianWhereInput): BatchPayload!
+  upsertComedian(where: ComedianWhereUniqueInput!, create: ComedianCreateInput!, update: ComedianUpdateInput!): Comedian!
+  updateManyVideos(data: VideoUpdateInput!, where: VideoWhereInput): BatchPayload!
   updateManyShows(data: ShowUpdateInput!, where: ShowWhereInput): BatchPayload!
   updateManyVenues(data: VenueUpdateInput!, where: VenueWhereInput): BatchPayload!
-  deleteManyComedians(where: ComedianWhereInput): BatchPayload!
+  updateManyComedians(data: ComedianUpdateInput!, where: ComedianWhereInput): BatchPayload!
+  deleteManyVideos(where: VideoWhereInput): BatchPayload!
   deleteManyShows(where: ShowWhereInput): BatchPayload!
   deleteManyVenues(where: VenueWhereInput): BatchPayload!
+  deleteManyComedians(where: ComedianWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -617,15 +659,18 @@ type PageInfo {
 }
 
 type Query {
-  comedians(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comedian]!
+  videos(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Video]!
   shows(where: ShowWhereInput, orderBy: ShowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Show]!
   venues(where: VenueWhereInput, orderBy: VenueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Venue]!
-  comedian(where: ComedianWhereUniqueInput!): Comedian
+  comedians(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comedian]!
+  video(where: VideoWhereUniqueInput!): Video
   show(where: ShowWhereUniqueInput!): Show
   venue(where: VenueWhereUniqueInput!): Venue
-  comediansConnection(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ComedianConnection!
+  comedian(where: ComedianWhereUniqueInput!): Comedian
+  videosConnection(where: VideoWhereInput, orderBy: VideoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VideoConnection!
   showsConnection(where: ShowWhereInput, orderBy: ShowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ShowConnection!
   venuesConnection(where: VenueWhereInput, orderBy: VenueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VenueConnection!
+  comediansConnection(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ComedianConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1246,9 +1291,10 @@ input ShowWhereUniqueInput {
 }
 
 type Subscription {
-  comedian(where: ComedianSubscriptionWhereInput): ComedianSubscriptionPayload
+  video(where: VideoSubscriptionWhereInput): VideoSubscriptionPayload
   show(where: ShowSubscriptionWhereInput): ShowSubscriptionPayload
   venue(where: VenueSubscriptionWhereInput): VenueSubscriptionPayload
+  comedian(where: ComedianSubscriptionWhereInput): ComedianSubscriptionPayload
 }
 
 type Venue implements Node {
@@ -2036,4 +2082,215 @@ input VenueWhereUniqueInput {
   slug: String
   stubsiteId: Int
   ticketmasterId: String
+}
+
+type Video {
+  url: String!
+  title: String!
+  source: VideoSource
+  comedian(where: ComedianWhereInput): Comedian!
+}
+
+"""A connection to a list of items."""
+type VideoConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [VideoEdge]!
+  aggregate: AggregateVideo!
+}
+
+input VideoCreateInput {
+  url: String!
+  title: String!
+  source: VideoSource
+  comedian: ComedianCreateOneInput!
+}
+
+"""An edge in a connection."""
+type VideoEdge {
+  """The item at the end of the edge."""
+  node: Video!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum VideoOrderByInput {
+  url_ASC
+  url_DESC
+  title_ASC
+  title_DESC
+  source_ASC
+  source_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type VideoPreviousValues {
+  url: String!
+  title: String!
+  source: VideoSource
+}
+
+enum VideoSource {
+  YOUTUBE
+  OTHER
+}
+
+type VideoSubscriptionPayload {
+  mutation: MutationType!
+  node: Video
+  updatedFields: [String!]
+  previousValues: VideoPreviousValues
+}
+
+input VideoSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [VideoSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [VideoSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [VideoSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: VideoWhereInput
+}
+
+input VideoUpdateInput {
+  url: String
+  title: String
+  source: VideoSource
+  comedian: ComedianUpdateOneInput
+}
+
+input VideoWhereInput {
+  """Logical AND on all given filters."""
+  AND: [VideoWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [VideoWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [VideoWhereInput!]
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  source: VideoSource
+
+  """All values that are not equal to given value."""
+  source_not: VideoSource
+
+  """All values that are contained in given list."""
+  source_in: [VideoSource!]
+
+  """All values that are not contained in given list."""
+  source_not_in: [VideoSource!]
+  comedian: ComedianWhereInput
+}
+
+input VideoWhereUniqueInput {
+  url: String
 }

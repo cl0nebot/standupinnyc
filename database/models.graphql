@@ -11,7 +11,17 @@ type Comedian @model {
   createdAt: DateTime! # optional system field
   updatedAt: DateTime! # optional system field
 }
+enum VideoSource {
+  YOUTUBE
+  OTHER
+}
+type Video {
+  url: String! @unique
+  title: String!
+  source: VideoSource
+  comedian: Comedian!
 
+}
 enum ScraperType {
   COMEDYCELLAR
   STUBSITES

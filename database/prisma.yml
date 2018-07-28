@@ -1,5 +1,6 @@
 # The endpoint of your Prisma API (deployed to a Prisma Sandbox).
-endpoint: https://standupin-dev.herokuapp.com/noahslist-api/staging
+endpoint: ${env:PRISMA_ENDPOINT}
+
 # The file containing the definition of your data model.
 datamodel:
   - models.graphql

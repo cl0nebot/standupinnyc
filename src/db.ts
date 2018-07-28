@@ -1,9 +1,8 @@
-import { Prisma } from './generated/prisma'
+import { Prisma } from "./generated/prisma";
 
 const prisma = new Prisma({
-  endpoint: "http://localhost:4466",
+  endpoint: "https://standupin-dev.herokuapp.com/noahslist-api/staging",
   debug: true
-})
+});
 
-
-export default prisma
+export default prisma;

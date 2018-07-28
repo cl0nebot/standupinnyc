@@ -54,5 +54,8 @@
       "yarn run prettier:lint --",
       "git add"
     ]
+  },
+  "peerDependencies": {
+    "graphql": "^0.13.0"
   }
 }

@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import { GraphQLServer } from "graphql-yoga";
 import { Prisma } from "./generated/prisma";
 import { Context } from "./utils";

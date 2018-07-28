@@ -1,16 +1,15 @@
 projects:
   app:
-    schemaPath: src/schema.graphql
+    schemaPath: server/src/schema.graphql
     extensions:
       endpoints:
-        default: https://standupin-dev.herokuapp.com/prisma-db/dev
-
+        default: http://localhost:4466
   database:
-    schemaPath: src/generated/prisma.graphql
+    schemaPath: server/src/generated/prisma.graphql
     extensions:
-      prisma: database/prisma.yml
+      prisma: ../database/prisma.yml
       codegen:
         - generator: prisma-binding
           language: typescript
           output:
-            binding: src/generated/prisma.ts
+            binding: server/src/generated/prisma.ts

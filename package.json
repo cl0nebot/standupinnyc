@@ -1,0 +1,13 @@
+{
+  "name": "noahslist-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Noah Pryor <noah@noahpryor.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"yarn --cwd client dev\" \"yarn --cwd server dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^3.6.1"
+  }
+}

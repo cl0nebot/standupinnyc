@@ -1,7 +1,7 @@
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import ErrorMessage from './ErrorMessage'
-
+import VenueShowUpdater from "./VenueShowUpdater"
 const VENUES_PER_PAGE = 10
 
 function VenueList ({
@@ -22,6 +22,7 @@ function VenueList ({
               <div>
                 <span>{index + 1}. </span>
                 <a href={venue.url}>{venue.name}</a>
+                <VenueShowUpdater slug={venue.slug}/>
               </div>
             </li>
           ))}

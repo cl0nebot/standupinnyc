@@ -10,6 +10,12 @@ const resolvers = {
     venues(parent, args, context: Context, info) {
       return context.db.query.venues(args, info);
     },
+    venuesConnection(parent, args, context: Context, info) {
+      return context.db.query.venuesConnection(args, info);
+    },
+    showsConnection(parent, args, context: Context, info) {
+      return context.db.query.showsConnection(args, info);
+    },
     comedians(parent, args, context: Context, info) {
       return context.db.query.comedians(args, info);
     }

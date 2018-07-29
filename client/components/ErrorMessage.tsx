@@ -1,8 +1,8 @@
 export default ({ message }) => (
-  <aside>
+  <aside className="error-message">>
     {message}
-    <style jsx>{`
-      aside {
+    <style jsx> {`
+      aside.error-message {
         padding: 1.5em;
         font-size: 14px;
         color: white;

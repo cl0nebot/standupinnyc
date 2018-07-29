@@ -1,7 +1,6 @@
 {
   "name": "comedyshows-nyc",
   "version": "1.0.0",
-  "main": "index.js",
   "author": "Noah Pryor <noah@noahpryor.com>",
   "private": true,
   "scripts": {

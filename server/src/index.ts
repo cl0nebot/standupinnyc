@@ -36,8 +36,8 @@ const server = new GraphQLServer({
   context: req => ({
     ...req,
     db: new Prisma({
-      endpoint: "http://localhost:4466",
-      debug: true // log all GraphQL queries & mutations sent to the Prisma API
+      endpoint: process.env.PRISMA_ENDPOINT,
+      debug: false // log all GraphQL queries & mutations sent to the Prisma API
       // secret: 'mysecret123', // only needed if specified in `database/prisma.yml`
     })
   })

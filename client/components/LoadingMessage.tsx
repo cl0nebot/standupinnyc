@@ -1,5 +1,5 @@
 export default ({ message }) => (
-  <aside>
+  <aside class="loading">
     {message}
     <style jsx>{`
       aside {

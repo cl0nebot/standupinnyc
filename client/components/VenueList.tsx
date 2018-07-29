@@ -1,7 +1,7 @@
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
 import ErrorMessage from "./ErrorMessage";
-import LoadingMessage from "./ErrorMessage";
+import LoadingMessage from "./LoadingMessage";
 
 import VenueShowUpdater from "./VenueShowUpdater";
 const VENUES_PER_PAGE = 10;

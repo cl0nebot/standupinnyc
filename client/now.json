@@ -1,0 +1,7 @@
+{
+  "alias": "ui.standupin.nyc",
+  "env": {
+    "NODE_ENV": "production",
+    "GRAPHQL_API_URL": "https://api.standupin.nyc"
+  }
+}

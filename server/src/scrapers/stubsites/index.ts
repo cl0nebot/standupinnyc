@@ -1,8 +1,8 @@
 import { getShowsForVenue } from "./fetchShows";
-import {Scraper} from "../interfaces"
+import { Scraper } from "../interfaces";
 
 const stubsites: Scraper = {
   getShowsForVenue,
   idField: "stubsiteId"
-}
-export default stubsites
+};
+export default stubsites;

@@ -1,3 +1,4 @@
 {
-  "alias": "api.comedyshows.nyc"
+  "alias": "api.standupin.nyc",
+  "dotenv": ".env.production"
 }

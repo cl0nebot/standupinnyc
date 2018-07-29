@@ -1,8 +1,8 @@
-import React from 'react'
-import { graphql } from 'react-apollo'
-import { gql } from 'apollo-boost'
+import React from "react";
+import { graphql } from "react-apollo";
+import { gql } from "apollo-boost";
 
-function VenueShowUpdater ({ updateShows, slug }) {
+function VenueShowUpdater({ updateShows, slug }) {
   return (
     <button onClick={() => updateShows(slug)}>
       Update Shows
@@ -17,24 +17,24 @@ function VenueShowUpdater ({ updateShows, slug }) {
         }
       `}</style>
     </button>
-  )
+  );
 }
 
 const updateShows = gql`
   mutation updateShowsForVenue($slug: String) {
-    updateShowsForVenue(where: {slug: $slug}) {
+    updateShowsForVenue(where: { slug: $slug }) {
       id
       startTime
       name
     }
   }
-`
+`;
 
 export default graphql(updateShows, {
   props: ({ ownProps, mutate }) => ({
-    updateShows: (slug) =>
+    updateShows: slug =>
       mutate({
         variables: { slug }
       })
   })
-})(VenueShowUpdater)
+})(VenueShowUpdater);

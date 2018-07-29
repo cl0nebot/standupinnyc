@@ -1,12 +1,15 @@
 {
-  "name": "with-apollo",
+  "name": "@noahpryor/comedyshows-client",
   "version": "2.0.0",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "now && now alias"
   },
   "dependencies": {
+    "@zeit/next-bundle-analyzer": "^0.1.1",
+    "@zeit/next-typescript": "1.1.0",
     "apollo-boost": "^0.1.3",
     "graphql": "0.13.2",
     "isomorphic-unfetch": "2.0.0",
@@ -24,14 +27,16 @@
     "@zeit/next-typescript": "1.1.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "23.0.1",
+    "babel-plugin-graphql-tag": "^1.6.0",
+    "dotenv": "^6.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^23.1.0",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^16.2.0",
+    "ts-transform-graphql-tag": "^0.1.3",
     "typescript": "^2.7.2"
   },
-
   "author": "",
   "license": "ISC"
 }

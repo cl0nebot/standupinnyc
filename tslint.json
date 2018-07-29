@@ -9,6 +9,6 @@
     "no-string-based-set-timeout": false
   },
   "linterOptions": {
-    "exclude": ["src/generated/**/*"]
+    "exclude": ["server/src/generated/**/*"]
   }
 }

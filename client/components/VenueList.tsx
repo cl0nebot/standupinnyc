@@ -1,25 +1,31 @@
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
 import ErrorMessage from "./ErrorMessage";
+import LoadingMessage from "./ErrorMessage";
+
 import VenueShowUpdater from "./VenueShowUpdater";
 const VENUES_PER_PAGE = 10;
 
-function VenueList({
+function VenueList( {
   data: {
     loading,
     error,
-    allVenues: { aggregate, edges, pageInfo }
+    allVenues
   },
   loadVenues
 }) {
-  const allVenues = edges.map(({ node }) => node);
-  if (error) return <ErrorMessage message="Error loading venues." />;
 
-  if (allVenues && allVenues.length) {
+  if (error) return <ErrorMessage message="Error loading venues." />;
+  if (loading) return <LoadingMessage message="loading" />;
+
+  if (allVenues && allVenues.edges.length) {
+    const {pageInfo, edges} = allVenues
+    const venues = edges.map(({ node }) => node);
+
     return (
       <section>
         <ul>
-          {allVenues.map((venue, index) => (
+          {venues.map((venue, index) => (
             <li key={venue.id}>
               <div>
                 <span>{index + 1}. </span>
@@ -106,7 +112,6 @@ export const allVenues = gql`
     }
   }
 `;
-console.log(allVenues)
 export const allVenuesQueryVars = {
   skip: 0,
   first: VENUES_PER_PAGE
@@ -132,6 +137,7 @@ export default graphql(allVenues, {
             }
             return Object.assign({}, previousResult, {
               // Append the new posts results to the old one
+              ...fetchMoreResult,
               allVenues: {
                 edges: [
                   ...previousResult.allVenues.edges,

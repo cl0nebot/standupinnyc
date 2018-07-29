@@ -25,7 +25,7 @@
     "server"
   ],
   "lint-staged": {
-    "*.{ts,tsx}!server/src/generated/*.ts": [
+    "**/*.{ts,tsx}!server/src/generated/*.ts": [
       "prettier --parser typescript --write",
       "tslint --fix",
       "git add"

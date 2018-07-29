@@ -1,0 +1,6 @@
+{
+  "rules": [
+    { "pathname": "/graphql**",  "method": ["GET", "POST"], "dest": "api.standupin.nyc" },
+    { "dest": "ui.standupin.nyc" }
+  ]
+}

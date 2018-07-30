@@ -1,10 +1,13 @@
 import "dotenv/config";
 
 import { GraphQLServer } from "graphql-yoga";
-import { Prisma } from "./generated/prisma";
+import { Prisma, ShowWhereInput, ShowOrderByInput } from "./generated/prisma";
 import { Context } from "./utils";
 import { importShows } from "./importer";
 
+interface Args {
+  where: ShowWhereInput
+}
 const resolvers = {
   Query: {
     venues(parent, args, context: Context, info) {
@@ -16,8 +19,25 @@ const resolvers = {
     showsConnection(parent, args, context: Context, info) {
       return context.db.query.showsConnection(args, info);
     },
+    comediansConnection(parent, args, context: Context, info) {
+      return context.db.query.comediansConnection(args, info);
+    },
+
     comedians(parent, args, context: Context, info) {
       return context.db.query.comedians(args, info);
+    },
+
+    shows(parent, args, context: Context, info) {
+      const {where} =args
+      const query = {
+        ...args,
+        orderBy: "startTime_ASC",
+        where: {
+          ...where,
+          startTime_gte: new Date().toISOString()
+        }
+      }
+      return context.db.query.shows(query, info);
     }
   },
   Mutation: {

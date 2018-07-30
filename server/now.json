@@ -1,4 +1,5 @@
 {
+  "name": "standupinnyc-api",
   "alias": "api.standupin.nyc",
   "dotenv": ".env.production"
 }

@@ -5,7 +5,8 @@ type Query {
   comedians(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comedian]!
   venuesConnection(where: VenueWhereInput, orderBy: VenueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VenueConnection!
   showsConnection(where: ShowWhereInput, orderBy: ShowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ShowConnection!
-
+  comediansConnection(where: ComedianWhereInput, orderBy: ComedianOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ComedianConnection!
+  shows(where: ShowWhereInput, orderBy: ShowOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Show]!
 }
 
 type Mutation {

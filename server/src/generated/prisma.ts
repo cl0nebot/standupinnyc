@@ -2,7 +2,6 @@ import { GraphQLResolveInfo, GraphQLSchema } from "graphql";
 import { IResolvers } from "graphql-tools/dist/Interfaces";
 import { Options } from "graphql-binding";
 import { makePrismaBindingClass, BasePrismaOptions } from "prisma-binding";
-
 export interface Query {
   videos: <T = Video[]>(
     args: {
@@ -3917,7 +3916,7 @@ export interface ShowEdge {
 }
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
 
@@ -3938,7 +3937,7 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).
 */
 export type Float = number;
 

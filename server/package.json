@@ -1,5 +1,6 @@
 {
   "name": "noahslist-api",
+  "version": "0.0.0",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
@@ -7,7 +8,7 @@
     "dev:start": "ts-node src/index.ts",
     "db": "docker-compose --file=database/docker-compose.yml up -d",
     "dev": "npm-run-all --parallel dev:start playground",
-    "playground": "graphql playground"
+    "playground": "graphql playground --port 3001"
   },
   "dependencies": {
     "axios": "^0.18.0",

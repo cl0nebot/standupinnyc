@@ -1,12 +1,12 @@
+import Head from "next/head"
 export default ({ children }) => (
   <main>
+    <Head>
+      <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" />
+    </Head>
     {children}
     <style jsx global>{`
-      * {
-        font-family: Menlo, Monaco, "Lucida Console", "Liberation Mono",
-          "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New",
-          monospace, serif;
-      }
+
       body {
         margin: 0;
         padding: 25px 50px;

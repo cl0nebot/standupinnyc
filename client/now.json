@@ -2,6 +2,6 @@
   "alias": "ui.standupin.nyc",
   "env": {
     "NODE_ENV": "production",
-    "GRAPHQL_API_URL": "https://api.standupin.nyc"
+    "GRAPHQL_API_URL": "https://1yh6qdbwi7.execute-api.us-east-1.amazonaws.com/dev"
   }
 }

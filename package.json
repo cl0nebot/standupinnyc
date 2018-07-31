@@ -19,10 +19,7 @@
     "tslint:lint": "tslint --format verbose --project ."
 
   },
-  "workspaces": [
-    "client",
-    "server"
-  ],
+
   "lint-staged": {
     "**/*.{ts,tsx}!server/src/generated/*.ts": [
       "prettier --parser typescript --write",

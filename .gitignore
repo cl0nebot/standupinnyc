@@ -8,3 +8,7 @@ node_modules
 .DS_Store
 tmp/
 client/.next
+
+# Serverless directories
+.serverless
+.build

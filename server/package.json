@@ -5,7 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "start": "serverless offline",
-    "dev": "serverless offline --watch",
+    "dev": "ts-node-dev src/index.ts",
     "deploy": "serverless deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +13,7 @@
   "author": "noah@noahpryor.com",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.283.1",
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
     "graphql-import": "0.6.0",
@@ -25,9 +26,12 @@
   },
   "devDependencies": {
     "@types/node": "10.5.2",
+    "dotenv": "^6.0.0",
     "serverless": "1.25.0",
+    "serverless-dotenv-plugin": "^1.1.5",
     "serverless-offline": "3.16.0",
     "serverless-plugin-typescript": "1.1.5",
+    "ts-node-dev": "^1.0.0-pre.26",
     "typescript": "2.9.2"
   }
 }

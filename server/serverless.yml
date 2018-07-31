@@ -1,4 +1,4 @@
-service: yoga-example-four
+service: standupin-api
 
 plugins:
   - serverless-plugin-typescript
@@ -11,10 +11,19 @@ package:
 
 provider:
   name: aws
-  runtime: nodejs6.10
+  stage: ${opt:stage, 'dev'}
+  runtime: nodejs8.10
+  timeout: 30 # The default is 6 seconds. Note: API Gateway current maximum is 30 seconds
+
   environment: # Service wide environment variables
+    SCRAPER_FUNCTION_NAME: ${self:service}-${self:provider.stage}-scrape
     PRISMA_MANAGEMENT_API_SECRET: ***REMOVED***
     PRISMA_ENDPOINT: ***REMOVED***
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource: "*"
 
 functions:
   graphql:
@@ -32,3 +41,14 @@ functions:
         path: /
         method: get
         cors: true
+  scrape:
+    handler: scraper.scrape
+    timeout: 300
+    # events:
+    # - schedule: rate(5 minutes)
+
+  cron_launcher:
+    timeout: 300
+    handler: scraper.cron
+    events:
+      - schedule: rate(5 minutes)

@@ -24,8 +24,6 @@ const Header = ({ router: { pathname } }) => {
         <HeaderLink active={pathname === "/comedians"} text="Comedians" path="/comedians" />
         <HeaderLink active={pathname === "/about"} text="About" path="/about" />
       </ul>
-      <style jsx>{`
-       `}</style>
     </header>
   );
 };

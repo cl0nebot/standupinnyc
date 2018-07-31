@@ -1,5 +1,5 @@
-# source: http://localhost:4466
-# timestamp: Fri Jul 27 2018 02:19:28 GMT-0400 (EDT)
+# source: http://prism-publi-1nuj11oyeaor6-2006472001.us-east-1.elb.amazonaws.com
+# timestamp: Mon Jul 30 2018 20:41:56 GMT-0400 (EDT)
 
 type AggregateComedian {
   count: Int!
@@ -584,9 +584,6 @@ input ComedianWhereInput {
   shows_every: ShowWhereInput
   shows_some: ShowWhereInput
   shows_none: ShowWhereInput
-  _MagicalBackRelation_ComedianToVideo_every: VideoWhereInput
-  _MagicalBackRelation_ComedianToVideo_some: VideoWhereInput
-  _MagicalBackRelation_ComedianToVideo_none: VideoWhereInput
 }
 
 input ComedianWhereUniqueInput {

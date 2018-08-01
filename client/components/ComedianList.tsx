@@ -36,7 +36,7 @@ function ComedianList( {
         {pageInfo.hasNextPage ? (
           <button onClick={() => loadMoreComedians()}>
             {" "}
-            {loading ? "Loading..." : "Show More"}{" "}
+            {loading ? "Loading..." : "Next page"}{" "}
           </button>
         ) : (
           ""
@@ -86,11 +86,11 @@ function ComedianList( {
 }
 
 export const allComedians = gql`
-   query allComedians($first: Int!, $skip: Int!) {
+   query allComedians($first: Int!, $after: String) {
     allComedians: comediansConnection(
       orderBy: createdAt_DESC
       first: $first
-      skip: $skip
+      after: $after
     ) {
       edges {
       node{
@@ -103,6 +103,8 @@ export const allComedians = gql`
       pageInfo {
         hasNextPage
         hasPreviousPage
+        endCursor
+        startCursor
       }
       aggregate {
         count
@@ -110,7 +112,6 @@ export const allComedians = gql`
     }
   }`;
 export const allComediansQueryVars = {
-  skip: 0,
   first: COMEDIANS_PER_PAGE
 };
 
@@ -126,7 +127,7 @@ export default graphql(allComedians, {
       loadMoreComedians: () => {
         return data.fetchMore({
           variables: {
-            skip: data.allComedians.edges.length
+            after: data.allComedians.pageInfo.endCursor
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             if (!fetchMoreResult) {
@@ -134,13 +135,7 @@ export default graphql(allComedians, {
             }
             return Object.assign({}, previousResult, {
               // Append the new posts results to the old one
-              ...fetchMoreResult,
-              allComedians: {
-                edges: [
-                  ...previousResult.allComedians.edges,
-                  ...fetchMoreResult.allComedians.edges
-                ]
-              }
+              ...fetchMoreResult
             });
           }
         });

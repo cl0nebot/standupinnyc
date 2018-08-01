@@ -18,6 +18,10 @@ export default ({ children }) => (
         font-size: 14px;
         line-height: 24px;
       }
+      main {
+        max-width: 1000px;
+        margin 0 auto;
+      }
       article {
         margin: 0 auto;
         max-width: 650px;

@@ -44,9 +44,7 @@ function VenueList( {
           ""
         )}
         <style jsx>{`
-          section {
-            padding-bottom: 20px;
-          }
+
           li {
             display: block;
             margin-bottom: 10px;

@@ -1,6 +1,5 @@
 import Head from "next/head";
 import App from "../components/App";
-import Header from "../components/Header";
 
 export default () => (
   <App>
@@ -8,7 +7,6 @@ export default () => (
       <title>Standupin.nyc</title>
     </Head>
 
-    <Header />
     <article>
       <h1>Standup in NYC</h1>
       <p>

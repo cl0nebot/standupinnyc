@@ -1,5 +1,4 @@
 import App from "../components/App";
-import Header from "../components/Header";
 import ComedianList from "../components/ComedianList";
 import Head from 'next/head'
 
@@ -9,7 +8,6 @@ export default () => (
       <title>Comedians</title>
     </Head>
 
-    <Header />
     <ComedianList />
   </App>
 );

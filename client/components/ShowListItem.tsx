@@ -13,15 +13,17 @@ function ShowListItem(props: ShowListItemProps) {
   const lineup = show.comedians.map(comedian => comedian.name).join(", ")
   const price = show.price ? `$${show.price}` : "free"
   return (<div className="ShowListItem">
-    <div>{format(show.startTime, 'dddd MM/DD h:mm a')}</div>
-    <div><a target="_blank" href={show.venue.url}>{show.venue.name}</a></div>
-    <h2>{lineup}</h2>
-    <a href={show.checkoutUrl} target="_blank">get tickets for {price}</a>
-    <br/>
+    <h3 className="title">
+      <a href={show.checkoutUrl} target="_blank">{lineup}</a>
+     </h3>
+    <h4 className="subtitle">
+      {format(show.startTime, 'dddd MM/DD h:mm a ')}
+      at the <a target="_blank" href={show.venue.url}>{show.venue.name}</a> {price}
+    </h4>
+    <hr/>
     <style jsx> {`
-      .ShowListItem {
-        padding: 1.5em;
-        font-size: 14px;
+      a {
+        text-decoration: none;
       }
     `}</style>
 

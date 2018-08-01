@@ -1,23 +1,32 @@
 import Head from "next/head"
+import Header from "./Header";
+
 export default ({ children }) => (
-  <main>
+  <main className="pure-type">
     <Head>
       <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" />
+      <link rel="stylesheet" href="https://cdn.rawgit.com/tilomitra/csstypography/master/css/pure-typography.css" />
+
     </Head>
-    {children}
+    <Header/>
+    <div className="content">
+      {children}
+    </div>
     <style jsx global>{`
 
       body {
         margin: 0;
         padding: 25px 50px;
       }
+      .content {
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 20px;
+      }
       a {
         color: #1F1F1F;
       }
-      p {
-        font-size: 14px;
-        line-height: 24px;
-      }
+
       main {
         max-width: 1000px;
         margin 0 auto;

@@ -26,7 +26,7 @@ function ComedianList( {
           {comedians.map((comedian, index) => (
             <li key={comedian.id}>
               <div>
-                <span>{index + 1}. </span>
+                <img width="200" height="200" src={comedian.imageUrl} />
                 <a href={comedian.url}>{comedian.name}</a>
 
               </div>

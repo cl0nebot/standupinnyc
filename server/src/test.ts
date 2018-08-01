@@ -2,4 +2,13 @@ import "dotenv/config";
 
 import { ScraperType } from "./generated/prisma";
 import { scrapeSources } from "./importer";
-scrapeSources(["COMEDYCELLAR", "STUBSITES"]);
+import scrape from "./scrapers/greenwich"
+
+
+
+const log = (data) => {
+  console.log(data)
+  return data
+}
+
+scrape().then(log)

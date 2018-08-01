@@ -26,6 +26,7 @@ enum ScraperType {
   COMEDYCELLAR
   STUBSITES
   TICKETMASTER
+  GREENWICH
 }
 
 type Show @model {
@@ -41,6 +42,7 @@ type Show @model {
   stubsiteId: Int @unique
   cellarId: Int @unique
   ticketmasterId: String @unique
+  greenwichId: String @unique
   createdAt: DateTime! # optional system field
   updatedAt: DateTime! # optional system field
 }

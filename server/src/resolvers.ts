@@ -1,7 +1,7 @@
 import { Context } from "./utils";
 import { importShows } from "./importer";
 
-
+import {Venue} from "./generated/prisma"
 const resolvers = {
   Query: {
     venues(parent, args, context: Context, info) {
@@ -37,7 +37,7 @@ const resolvers = {
   Mutation: {
     async updateShowsForVenue(parent, { where }, ctx: Context, info) {
       //  returnns an array of {id: } objects containing a show Id
-      const venue = await ctx.db.query.venue({ where });
+      const venue = await ctx.db.query.venue({ where }) as Venue;
       const showIds = await importShows(venue);
       return ctx.db.query.shows({ where: { id_in: showIds } }, info);
     }

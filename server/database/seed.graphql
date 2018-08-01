@@ -17,6 +17,22 @@ mutation {
   ) {
     id
   }
+  greenwich: createVenue(
+    data: {
+      name: "Greenwich Village Comedy Club"
+      slug: "greenwich"
+      lineOne: "99 Macdougal St"
+      zip: 10012
+      city: "New York"
+      state: "New York"
+      url: "https://greenwichvillagecomedyclub.com"
+      latitude: 40.7295817
+      longitude: -74.0008608
+      scraper: GREENWICH
+    }
+  ) {
+    id
+  }
 
   comedycellar: createVenue(
     data: {

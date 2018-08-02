@@ -19,8 +19,8 @@ const Header = ({ router: { pathname } }) => {
         </a>
       </Link>
       <ul className="pure-menu-list">
+        <HeaderLink active={pathname === "/"} text="Shows" path="/" />
         <HeaderLink active={pathname === "/venues"} text="Venues" path="/venues" />
-        <HeaderLink active={pathname === "/shows"} text="Shows" path="/shows" />
         <HeaderLink active={pathname === "/comedians"} text="Comedians" path="/comedians" />
         <HeaderLink active={pathname === "/about"} text="About" path="/about" />
       </ul>

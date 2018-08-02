@@ -8,7 +8,7 @@ function ComedianList( {
   data: {
     loading,
     error,
-    allComedians
+    data
   },
   loadMoreComedians
 }) {
@@ -16,12 +16,13 @@ function ComedianList( {
   if (error) return <ErrorMessage message="Error loading comedians." />;
   if (loading) return <LoadingMessage message="loading" />;
 
-  if (allComedians && allComedians.edges.length) {
-    const {pageInfo, edges} = allComedians
+  if (data && data.edges.length) {
+    const {pageInfo, edges} = data
     const comedians = edges.map(({ node }) => node);
 
     return (
       <section>
+
         <ul>
           {comedians.map((comedian, index) => (
             <li key={comedian.id}>
@@ -36,7 +37,7 @@ function ComedianList( {
         {pageInfo.hasNextPage ? (
           <button onClick={() => loadMoreComedians()}>
             {" "}
-            {loading ? "Loading..." : "Next page"}{" "}
+            {loading ? "Loading..." : "Load More"}{" "}
           </button>
         ) : (
           ""
@@ -85,12 +86,12 @@ function ComedianList( {
   return <div>Loading</div>;
 }
 
-export const allComedians = gql`
-   query allComedians($first: Int!, $after: String) {
-    allComedians: comediansConnection(
+export const allComediansQuery = gql`
+   query allComedians($first: Int!, $cursor: String) {
+    data: comediansConnection(
       orderBy: createdAt_DESC
       first: $first
-      after: $after
+      after: $cursor
     ) {
       edges {
       node{
@@ -102,12 +103,7 @@ export const allComedians = gql`
     }}
       pageInfo {
         hasNextPage
-        hasPreviousPage
         endCursor
-        startCursor
-      }
-      aggregate {
-        count
       }
     }
   }`;
@@ -117,7 +113,7 @@ export const allComediansQueryVars = {
 
 // The `graphql` wrapper executes a GraphQL query and makes the results
 // available on the `data` prop of the wrapped component (PostList)
-export default graphql(allComedians, {
+export default graphql(allComediansQuery, {
   options: {
     variables: allComediansQueryVars
   },
@@ -127,17 +123,24 @@ export default graphql(allComedians, {
       loadMoreComedians: () => {
         return data.fetchMore({
           variables: {
-            after: data.allComedians.pageInfo.endCursor
-          },
-          updateQuery: (previousResult, { fetchMoreResult }) => {
-            if (!fetchMoreResult) {
-              return previousResult;
-            }
-            return Object.assign({}, previousResult, {
-              // Append the new posts results to the old one
-              ...fetchMoreResult
-            });
-          }
+             cursor: data.data.pageInfo.endCursor
+           },
+           updateQuery: (previousResult, { fetchMoreResult }) => {
+             const newEdges = fetchMoreResult.data.edges;
+             const pageInfo = fetchMoreResult.data.pageInfo;
+
+             return newEdges.length
+               ? {
+                   // Put the new comments at the end of the list and update `pageInfo`
+                   // so we have the new `endCursor` and `hasNextPage` values
+                   data: {
+                     __typename: previousResult.data.__typename,
+                     edges: [...previousResult.data.edges, ...newEdges],
+                     pageInfo
+                   }
+                 }
+               : previousResult;
+           }
         });
       }
     };

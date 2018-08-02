@@ -19,8 +19,8 @@ export default ({ children }) => (
         padding: 25px 50px;
       }
       .content {
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
         padding-bottom: 20px;
       }
       a {

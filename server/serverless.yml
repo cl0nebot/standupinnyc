@@ -17,8 +17,8 @@ provider:
 
   environment: # Service wide environment variables
     SCRAPER_FUNCTION_NAME: ${self:service}-${self:provider.stage}-scrape
-    PRISMA_MANAGEMENT_API_SECRET: ***REMOVED***
-    PRISMA_ENDPOINT: ***REMOVED***
+    PRISMA_MANAGEMENT_API_SECRET: ${env:PRISMA_MANAGEMENT_API_SECRET}
+    PRISMA_ENDPOINT: ${env:PRISMA_ENDPOINT}
   iamRoleStatements:
     - Effect: Allow
       Action:

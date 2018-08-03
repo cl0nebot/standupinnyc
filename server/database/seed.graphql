@@ -90,14 +90,14 @@ mutation {
     data: {
       slug: "eastville"
       name: "EastVille Comedy Club"
-      lineOne: "85 E 4th Street"
-      zip: 10003
-      city: "New York"
+      lineOne: "487 Atlantic Avenue"
+      zip: 11217
+      city: "Brooklyn"
       state: "New York"
       latitude: 40.7264324
       longitude: -73.9899
       url: "http://eastvillecomedy.com/"
-      ticketmasterId: "KovZpZAFnAJA"
+      ticketmasterId: "KovZpZA6eklA"
       scraper: TICKETMASTER
     }
   ) {
